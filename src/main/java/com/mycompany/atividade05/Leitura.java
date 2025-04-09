@@ -13,8 +13,8 @@ import java.util.Scanner;
  */
 public class Leitura {
 
-    Passeio[] arrayPasseio = new Passeio[2];
-    Carga[] arrayCarga = new Carga[2];
+    Passeio[] arrayPasseio = new Passeio[3];
+    Carga[] arrayCarga = new Carga[3];
     Scanner leitura = new Scanner(System.in);
     private int opcao = -1;
     private int countPasseio = 0;
@@ -100,14 +100,12 @@ public class Leitura {
         System.out.println("Digite a potencia do motor: ");
         var potencia = leitura.nextInt();
         System.out.println("*********************************************");
-        System.out.println("Digite 7 para sair ou 0 para continuar.");
-        opcao = leitura.nextInt();
+
         try {
             arrayPasseio[countPasseio] = new Passeio(qtdPassageiros, placa, marca, modelo, cor, velocidade, rodas, pistao, potencia);
-            if (countPasseio > 2) {
+            if (countCarga > 2) {
                 throw new ArrayIndexOutOfBoundsException("O Vetor está cheio!!");
             }
-
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Vetor cheio!!" + e.getMessage());
         }
@@ -115,12 +113,19 @@ public class Leitura {
 
         System.out.println("Voce pode registrar mais:  " + (5 - countPasseio) + " Veiculos de passeio.");
 
+        System.out.println("Deseja cadastrar um novo veiculo de passeio? Digite 1 para SIM ou 0 Para Não");
+        var novoCadastro = leitura.nextInt();
+        
+        if (novoCadastro == 1) {
+            cadastrarCarga();
+        } else {
+            exibeMenu();
+        }
+
         if (opcao == 7) {
             System.out.println("Fim do programa");
             System.exit(0);
-        }
-        if (opcao != 7) {
-
+        } else {
             exibeMenu();
         }
 
@@ -150,8 +155,7 @@ public class Leitura {
         System.out.println("Digite a potencia do motor: ");
         var potenciaCarga = leitura.nextInt();
         System.out.println("*********************************************");
-        System.out.println("Digite 7 para sair ou 0 para continuar.");
-        opcao = leitura.nextInt();
+        
 
         try {
             arrayCarga[countCarga] = new Carga(cargaMaxima, tara, placaCarga, marcaCarga, modeloCarga, corCarga, velocidadeCarga, rodasCarga, pistaoCarga, potenciaCarga);
@@ -164,6 +168,14 @@ public class Leitura {
         countCarga += 1;
 
         System.out.println("Voce pode registrar mais:  " + (5 - countCarga) + " Veiculos de Carga.");
+            System.out.println("Deseja cadastrar um novo veiculo de Carga? Digite 1 para SIM ou 0 Para Não");
+        var novoCadastro = leitura.nextInt();
+        
+        if (novoCadastro == 1) {
+            cadastrarPasseio();
+        } else {
+            exibeMenu();
+        }
 
         if (opcao == 7) {
             System.out.println("Fim do programa");
