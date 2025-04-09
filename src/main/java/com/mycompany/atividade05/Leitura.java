@@ -1,0 +1,200 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.atividade05;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+/**
+ *
+ * @author alan
+ */
+public class Leitura {
+
+    Passeio[] arrayPasseio = new Passeio[2];
+    Carga[] arrayCarga = new Carga[2];
+    Scanner leitura = new Scanner(System.in);
+    private int opcao = -1;
+    private int countPasseio = 0;
+    private int countCarga = 0;
+
+    public void exibeMenu() {
+
+        while (opcao != 7) {
+
+            var menu = """
+            ###################### Escolha uma opcao abaixo ####################
+                       
+					1 - Cadastrar Veículo de Passeio
+					2 - Cadastrar Veículo de Carga
+					3 - Imprimir Todos os Veículos de Passeio
+					4 - Imprimir Todos os Veículos de Carga
+					5 - Imprimir Veículo de Passeio pela Placa
+					6 - Imprimir Veículo de Carga pela Placa
+					7 - Sair       
+                       
+            ####################################################################
+					""";
+
+            System.out.println(menu);
+            try {
+                opcao = leitura.nextInt();
+                leitura.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Use apenas numeros inteiros." + e.getMessage());
+                break;
+            }
+
+            switch (opcao) {
+
+                case 1:
+                    cadastrarPasseio();
+                    break;
+                case 2:
+                    cadastrarCarga();
+                    break;
+                case 3:
+                    listarPasseio();
+                    break;
+                case 4:
+                    listarCarga();
+                    break;
+                case 5:
+                    imprimirPlacaPasseio();
+                    break;
+                case 6:
+                    imprimirPlacaCarga();
+                    break;
+                case 7:
+                    System.out.println("Saindo do programa...");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida. Digite numeros inteiros entre 0 e 7");
+            }
+
+        }
+    }
+
+    private void cadastrarPasseio() {
+
+        System.out.println("Digite a quantidade de passageiros: ");
+        var qtdPassageiros = leitura.nextInt();
+        leitura.nextLine();
+        System.out.println("Digite a placa do veiculo de Passeio: ");
+        var placa = leitura.nextLine();
+        System.out.println("Digite a marca do veiculo: ");
+        var marca = leitura.nextLine();
+        System.out.println("Digite o modelo do veiculo: ");
+        var modelo = leitura.nextLine();
+        System.out.println("Digite a cor do veiculo: ");
+        var cor = leitura.nextLine();
+        System.out.println("Digite a velocidade maxima do veiculo: ");
+        var velocidade = leitura.nextFloat();
+        System.out.println("Digite a quantidade de rodas do veiculo: ");
+        var rodas = leitura.nextInt();
+        System.out.println("Digite a quantidade de pistoes do veiculo: ");
+        var pistao = leitura.nextInt();
+        System.out.println("Digite a potencia do motor: ");
+        var potencia = leitura.nextInt();
+        System.out.println("*********************************************");
+        System.out.println("Digite 7 para sair ou 0 para continuar.");
+        opcao = leitura.nextInt();
+        try {
+            arrayPasseio[countPasseio] = new Passeio(qtdPassageiros, placa, marca, modelo, cor, velocidade, rodas, pistao, potencia);
+            if (countPasseio > 2) {
+                throw new ArrayIndexOutOfBoundsException("O Vetor está cheio!!");
+            }
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Vetor cheio!!" + e.getMessage());
+        }
+        countPasseio += 1;
+
+        System.out.println("Voce pode registrar mais:  " + (5 - countPasseio) + " Veiculos de passeio.");
+
+        if (opcao == 7) {
+            System.out.println("Fim do programa");
+            System.exit(0);
+        }
+        if (opcao != 7) {
+
+            exibeMenu();
+        }
+
+    }
+
+    private void cadastrarCarga() {
+        System.out.println("Digite a carga Maxima");
+        var cargaMaxima = leitura.nextInt();
+        leitura.nextLine();
+        System.out.println("Digite a Tara: ");
+        var tara = leitura.nextInt();
+        System.out.println("Digite a placa do veiculo de Passeio: ");
+        leitura.nextLine();
+        var placaCarga = leitura.nextLine();
+        System.out.println("Digite a marca do veiculo: ");
+        var marcaCarga = leitura.nextLine();
+        System.out.println("Digite o modelo do veiculo: ");
+        var modeloCarga = leitura.nextLine();
+        System.out.println("Digite a cor do veiculo: ");
+        var corCarga = leitura.nextLine();
+        System.out.println("Digite a velocidade maxima do veiculo: ");
+        var velocidadeCarga = leitura.nextFloat();
+        System.out.println("Digite a quantidade de rodas do veiculo: ");
+        var rodasCarga = leitura.nextInt();
+        System.out.println("Digite a quantidade de pistoes do veiculo: ");
+        var pistaoCarga = leitura.nextInt();
+        System.out.println("Digite a potencia do motor: ");
+        var potenciaCarga = leitura.nextInt();
+        System.out.println("*********************************************");
+        System.out.println("Digite 7 para sair ou 0 para continuar.");
+        opcao = leitura.nextInt();
+
+        try {
+            arrayCarga[countCarga] = new Carga(cargaMaxima, tara, placaCarga, marcaCarga, modeloCarga, corCarga, velocidadeCarga, rodasCarga, pistaoCarga, potenciaCarga);
+            if (countCarga > 2) {
+                throw new ArrayIndexOutOfBoundsException("O Vetor está cheio!!");
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Vetor cheio!!" + e.getMessage());
+        }
+        countCarga += 1;
+
+        System.out.println("Voce pode registrar mais:  " + (5 - countCarga) + " Veiculos de Carga.");
+
+        if (opcao == 7) {
+            System.out.println("Fim do programa");
+            System.exit(0);
+        }
+        if (opcao != 7) {
+
+            exibeMenu();
+        }
+    }
+
+    private void listarPasseio() {
+        System.out.println("Listando os veiculos de passeio cadastrados.");
+        for (Passeio p : arrayPasseio) {
+            System.out.println(p);
+        }
+    }
+
+    private void listarCarga() {
+        System.out.println("Listando os veiculos de carga");
+        for (Carga c : arrayCarga) {
+            System.out.println(c);
+        }
+    }
+
+    private void imprimirPlacaPasseio() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void imprimirPlacaCarga() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+}
