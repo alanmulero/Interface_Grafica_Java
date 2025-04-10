@@ -13,12 +13,13 @@ import java.util.Scanner;
  */
 public class Leitura {
 
-    Passeio[] arrayPasseio = new Passeio[3];
-    Carga[] arrayCarga = new Carga[3];
+    Passeio[] arrayPasseio = new Passeio[5];
+    Carga[] arrayCarga = new Carga[5];
     Scanner leitura = new Scanner(System.in);
     private int opcao = -1;
     private int countPasseio = 0;
     private int countCarga = 0;
+    private boolean placaEncontrada = false;
 
     public void exibeMenu() {
 
@@ -137,7 +138,7 @@ public class Leitura {
         leitura.nextLine();
         System.out.println("Digite a Tara: ");
         var tara = leitura.nextInt();
-        System.out.println("Digite a placa do veiculo de Passeio: ");
+        System.out.println("Digite a placa do veiculo de Carga: ");
         leitura.nextLine();
         var placaCarga = leitura.nextLine();
         System.out.println("Digite a marca do veiculo: ");
@@ -199,7 +200,7 @@ public class Leitura {
             System.out.println(c);
         }
     }
-    boolean placaEncontrada = false;
+   
 
     private void imprimirPlacaPasseio() {
         System.out.println("Digite a placa do veiculo de passeio que deseja encontrar: ");
@@ -211,12 +212,13 @@ public class Leitura {
                 System.out.println("Imprimindo modelo com placa compativel:");
                 System.out.println(arrayPasseio[i]);
                 break;
-            } else {
+            } 
 
-                if (!placaEncontrada) {
+                if (placaEncontrada) {
                     System.out.println("Placa não encontrada.");
+                    break;
                 }
-            }
+            
         }
     }
 
@@ -230,13 +232,13 @@ public class Leitura {
                 System.out.println("Imprimindo modelo com placa compativel:");
                 System.out.println(arrayCarga[i]);
                 break;
-            } else {
+            }
 
-                if (!placaEncontrada) {
+                if (placaEncontrada) {
                     System.out.println("Placa não encontrada.");
                     break;
                 }
-            }
+            
         }
     }
 
