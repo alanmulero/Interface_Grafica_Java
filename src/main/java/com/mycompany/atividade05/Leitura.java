@@ -115,9 +115,9 @@ public class Leitura {
 
         System.out.println("Deseja cadastrar um novo veiculo de passeio? Digite 1 para SIM ou 0 Para Não");
         var novoCadastro = leitura.nextInt();
-        
+
         if (novoCadastro == 1) {
-            cadastrarCarga();
+            cadastrarPasseio();
         } else {
             exibeMenu();
         }
@@ -155,7 +155,6 @@ public class Leitura {
         System.out.println("Digite a potencia do motor: ");
         var potenciaCarga = leitura.nextInt();
         System.out.println("*********************************************");
-        
 
         try {
             arrayCarga[countCarga] = new Carga(cargaMaxima, tara, placaCarga, marcaCarga, modeloCarga, corCarga, velocidadeCarga, rodasCarga, pistaoCarga, potenciaCarga);
@@ -168,11 +167,11 @@ public class Leitura {
         countCarga += 1;
 
         System.out.println("Voce pode registrar mais:  " + (5 - countCarga) + " Veiculos de Carga.");
-            System.out.println("Deseja cadastrar um novo veiculo de Carga? Digite 1 para SIM ou 0 Para Não");
+        System.out.println("Deseja cadastrar um novo veiculo de Carga? Digite 1 para SIM ou 0 Para Não");
         var novoCadastro = leitura.nextInt();
-        
+
         if (novoCadastro == 1) {
-            cadastrarPasseio();
+            cadastrarCarga();
         } else {
             exibeMenu();
         }
@@ -200,13 +199,45 @@ public class Leitura {
             System.out.println(c);
         }
     }
+    boolean placaEncontrada = false;
 
     private void imprimirPlacaPasseio() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        System.out.println("Digite a placa do veiculo de passeio que deseja encontrar: ");
+        var placaPasseio = leitura.next();
+        for (int i = 0; i < arrayPasseio.length; i++) {
+            if (arrayPasseio[i].getPlaca().equals(placaPasseio)) {
+                placaEncontrada = true;
+                System.out.println("PLACA ENCONTRADA!");
+                System.out.println("Imprimindo modelo com placa compativel:");
+                System.out.println(arrayPasseio[i]);
+                break;
+            } else {
+
+                if (!placaEncontrada) {
+                    System.out.println("Placa não encontrada.");
+                }
+            }
+        }
     }
 
     private void imprimirPlacaCarga() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        System.out.println("Digite a placa do veiculo de CARGA que deseja encontrar: ");
+        var placaCarga = leitura.next();
+        for (int i = 0; i < arrayPasseio.length; i++) {
+            if (arrayCarga[i].getPlaca().equals(placaCarga)) {
+                placaEncontrada = true;
+                System.out.println("PLACA ENCONTRADA!");
+                System.out.println("Imprimindo modelo com placa compativel:");
+                System.out.println(arrayCarga[i]);
+                break;
+            } else {
+
+                if (!placaEncontrada) {
+                    System.out.println("Placa não encontrada.");
+                    break;
+                }
+            }
+        }
     }
 
 }
