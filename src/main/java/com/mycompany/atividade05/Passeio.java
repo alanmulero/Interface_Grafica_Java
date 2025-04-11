@@ -36,7 +36,7 @@ public final class Passeio extends Veiculo implements Calcular {
     }
 
     @Override
-    public float calcVel(float veloMax) {
+    public final float calcVel(float veloMax) {
         System.out.println("************************************************************************************");
         System.out.println("Velocidade do veiculo de PASSEIO: ==> " + this.getMarca() + " Convertida para metros por hora:  " + veloMax * 1000);
         return veloMax * 1000;
@@ -54,13 +54,14 @@ public final class Passeio extends Veiculo implements Calcular {
                 + "Quantidade de Rodas: " + super.getQtdRodas() + "\n"
                 + "Quantidade de pistoes: " + super.getMotor().getQtdPistao() + "\n"
                 + "Potencia do motor: " + super.getMotor().getPotencia()+"\n"
+                 + "Metodo calcular Somando Letras: " + this.calcular()+"\n"
                 + "*******************************************"
                 
                 + '}';
     }
 
     @Override
-    public int calcular() {
+    public final int calcular() {
         int somaLetra = 0;
         
         somaLetra += getPlaca().length();
