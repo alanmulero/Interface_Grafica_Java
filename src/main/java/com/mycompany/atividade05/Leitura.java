@@ -227,7 +227,7 @@ public class Leitura {
         System.out.println("Digite a placa do veiculo de passeio que deseja encontrar: ");
         var placaPasseio = leitura.next();
         for (int i = 0; i < arrayPasseio.length; i++) {
-            if (arrayPasseio[i].getPlaca().equals(placaPasseio)) {
+            if (arrayPasseio[i] != null &&   arrayPasseio[i].getPlaca().equalsIgnoreCase(placaPasseio)) {
                 placaEncontrada = true;
                 System.out.println("PLACA ENCONTRADA!");
                 System.out.println("Imprimindo modelo com placa compativel:");
@@ -235,7 +235,7 @@ public class Leitura {
                 break;
             }
 
-            if (placaEncontrada) {
+            if (placaEncontrada ) {
                 System.out.println("Placa não encontrada.");
                 break;
             }
@@ -246,8 +246,8 @@ public class Leitura {
     private void imprimirPlacaCarga() {
         System.out.println("Digite a placa do veiculo de CARGA que deseja encontrar: ");
         var placaCarga = leitura.next();
-        for (int i = 0; i < arrayPasseio.length; i++) {
-            if (arrayCarga[i].getPlaca().equals(placaCarga)) {
+        for (int i = 0; i < arrayCarga.length; i++) {
+            if (arrayCarga[i] != null && arrayCarga[i].getPlaca().equalsIgnoreCase(placaCarga)) {
                 placaEncontrada = true;
                 System.out.println("PLACA ENCONTRADA!");
                 System.out.println("Imprimindo modelo com placa compativel:");
@@ -255,9 +255,10 @@ public class Leitura {
                 break;
             }
 
-            if (placaEncontrada) {
+            if (placaEncontrada ) {
                 System.out.println("Placa não encontrada.");
                 break;
+                
             }
 
         }
