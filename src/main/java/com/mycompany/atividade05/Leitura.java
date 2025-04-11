@@ -4,6 +4,7 @@
  */
 package com.mycompany.atividade05;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -15,6 +16,7 @@ public class Leitura {
 
     Passeio[] arrayPasseio = new Passeio[5];
     Carga[] arrayCarga = new Carga[5];
+    ArrayList<String> placas = new ArrayList<>();
     Scanner leitura = new Scanner(System.in);
     private int opcao = -1;
     private int countPasseio = 0;
@@ -84,8 +86,10 @@ public class Leitura {
         System.out.println("Digite a quantidade de passageiros: ");
         var qtdPassageiros = leitura.nextInt();
         leitura.nextLine();
+
         System.out.println("Digite a placa do veiculo de Passeio: ");
         var placa = leitura.nextLine();
+
         System.out.println("Digite a marca do veiculo: ");
         var marca = leitura.nextLine();
         System.out.println("Digite o modelo do veiculo: ");
@@ -103,15 +107,23 @@ public class Leitura {
         System.out.println("*********************************************");
 
         try {
-            arrayPasseio[countPasseio] = new Passeio(qtdPassageiros, placa, marca, modelo, cor, velocidade, rodas, pistao, potencia);
-            if (countCarga > 2) {
+            if (countPasseio > 0 && placas.contains(placa)) {
+                System.out.println("***********************");
+                System.out.println("Veiculo ja cadastrado!");
+                System.out.println("************************");
+                exibeMenu();
+
+            } else {
+                arrayPasseio[countPasseio] = new Passeio(qtdPassageiros, placa, marca, modelo, cor, velocidade, rodas, pistao, potencia);
+            }
+            if (countPasseio > 5) {
                 throw new ArrayIndexOutOfBoundsException("O Vetor está cheio!!");
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Vetor cheio!!" + e.getMessage());
         }
         countPasseio += 1;
-
+        placas.add(placa);
         System.out.println("Voce pode registrar mais:  " + (5 - countPasseio) + " Veiculos de passeio.");
 
         System.out.println("Deseja cadastrar um novo veiculo de passeio? Digite 1 para SIM ou 0 Para Não");
@@ -141,6 +153,7 @@ public class Leitura {
         System.out.println("Digite a placa do veiculo de Carga: ");
         leitura.nextLine();
         var placaCarga = leitura.nextLine();
+
         System.out.println("Digite a marca do veiculo: ");
         var marcaCarga = leitura.nextLine();
         System.out.println("Digite o modelo do veiculo: ");
@@ -158,14 +171,23 @@ public class Leitura {
         System.out.println("*********************************************");
 
         try {
-            arrayCarga[countCarga] = new Carga(cargaMaxima, tara, placaCarga, marcaCarga, modeloCarga, corCarga, velocidadeCarga, rodasCarga, pistaoCarga, potenciaCarga);
-            if (countCarga > 2) {
+            if (countPasseio > 0 && placas.contains(placaCarga)) {
+                System.out.println("***********************");
+                System.out.println("Veiculo ja cadastrado!");
+                System.out.println("************************");
+                exibeMenu();
+            } else {
+
+                arrayCarga[countCarga] = new Carga(cargaMaxima, tara, placaCarga, marcaCarga, modeloCarga, corCarga, velocidadeCarga, rodasCarga, pistaoCarga, potenciaCarga);
+            }
+            if (countCarga > 5) {
                 throw new ArrayIndexOutOfBoundsException("O Vetor está cheio!!");
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Vetor cheio!!" + e.getMessage());
         }
         countCarga += 1;
+        placas.add(placaCarga);
 
         System.out.println("Voce pode registrar mais:  " + (5 - countCarga) + " Veiculos de Carga.");
         System.out.println("Deseja cadastrar um novo veiculo de Carga? Digite 1 para SIM ou 0 Para Não");
@@ -200,7 +222,6 @@ public class Leitura {
             System.out.println(c);
         }
     }
-   
 
     private void imprimirPlacaPasseio() {
         System.out.println("Digite a placa do veiculo de passeio que deseja encontrar: ");
@@ -212,13 +233,13 @@ public class Leitura {
                 System.out.println("Imprimindo modelo com placa compativel:");
                 System.out.println(arrayPasseio[i]);
                 break;
-            } 
+            }
 
-                if (placaEncontrada) {
-                    System.out.println("Placa não encontrada.");
-                    break;
-                }
-            
+            if (placaEncontrada) {
+                System.out.println("Placa não encontrada.");
+                break;
+            }
+
         }
     }
 
@@ -234,12 +255,13 @@ public class Leitura {
                 break;
             }
 
-                if (placaEncontrada) {
-                    System.out.println("Placa não encontrada.");
-                    break;
-                }
-            
+            if (placaEncontrada) {
+                System.out.println("Placa não encontrada.");
+                break;
+            }
+
         }
     }
 
+    // Verifica se placa ja foi cadastrada
 }
