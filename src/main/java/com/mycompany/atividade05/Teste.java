@@ -8,7 +8,12 @@ import java.util.InputMismatchException;
 
 /**
  *
- * @author alan toledo alan.mulero@gmail.com
+ * @author alan toledo 
+ * alan.mulero@gmail.com
+ * 
+ * Atividade 7, dando continuidade na atividade 05.
+ * Implantando o tratamento de Exceções.
+ * 
  */
 public class Teste {
 
@@ -76,6 +81,7 @@ public class Teste {
 
                 default:
                     System.out.println("Opção inválida. Digite numeros inteiros entre 0 e 7");
+                    break;
             }
 
         }
@@ -237,8 +243,9 @@ public class Teste {
                 break;
             }
 
-            if (placaEncontrada) {
+            else {
                 System.out.println("Placa NÃO encontrada!");
+                System.out.println("Voltando ao Menu");
                 break;
             }
 
@@ -258,8 +265,9 @@ public class Teste {
                 break;
             }
 
-            if (placaEncontrada) {
+            else {
                 System.out.println("Placa NÃo encontrada!!");
+                System.out.println("Voltando ao Menu");
                 break;
 
             }
