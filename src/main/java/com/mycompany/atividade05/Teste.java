@@ -5,15 +5,16 @@ package com.mycompany.atividade05;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author alan toledo 
- * alan.mulero@gmail.com
- * 
- * Atividade 7, dando continuidade na atividade 05.
- * Implantando o tratamento de Exceções.
- * 
+ * @author alan toledo alan.mulero@gmail.com
+ *
+ * Atividade 7, dando continuidade na atividade 05. Implantando o tratamento de
+ * Exceções.
+ *
  */
 public class Teste {
 
@@ -27,7 +28,7 @@ public class Teste {
     int countCarga = 0;
     boolean placaEncontrada = false;
 
-    public void exibeMenu() {
+    public void exibeMenu() throws VeiculoExistException {
 
         while (opcao != 7) {
 
@@ -58,11 +59,23 @@ public class Teste {
             switch (opcao) {
 
                 case 1:
-                    cadastrarPasseio();
-                    break;
+                    try {
+                        cadastrarPasseio();
+                        break;
+                    } catch (VeiculoExistException ex) {
+                        System.out.println("Lançando VeiculoExistException: " + ex.getMessage());
+                        exibeMenu();
+                        break;
+                    }
                 case 2:
-                    cadastrarCarga();
-                    break;
+                    try {
+                        cadastrarCarga();
+                        break;
+                    } catch (VeiculoExistException ex) {
+                        System.out.println("Lançando VeiculoExistException: " + ex.getMessage());
+                        exibeMenu();
+                        break;
+                    }
                 case 3:
                     listarPasseio();
                     break;
@@ -87,21 +100,34 @@ public class Teste {
         }
     }
 
-    private void cadastrarPasseio() {
-        var leitura = leituraClasse.scaneer;
-        System.out.println("Digite a quantidade de passageiros: ");
-        var qtdPassageiros = leitura.nextInt();
-        leitura.nextLine();
+    // Metodo para verificar placa
+    public String verificaPlaca(String testaPlaca) throws VeiculoExistException {
 
-        System.out.println("Digite a placa do veiculo de Passeio: ");
-        var placa = leitura.nextLine();
+        if (placas.contains(testaPlaca)) {
+            throw new VeiculoExistException(" Já existe um veículo com esta placa  ");
+        } else {
+            return testaPlaca;
+        }
+    }
+
+    private void cadastrarPasseio() throws VeiculoExistException {
+        var leitura = leituraClasse.scaneer;
+        System.out.println("Digite a placa do veiculo de passeio: ");
+        var testaPlaca = leitura.next();
+        
+        var placa = verificaPlaca(testaPlaca);
 
         System.out.println("Digite a marca do veiculo: ");
-        var marca = leitura.nextLine();
+        var marca = leitura.next();
+        leitura.nextLine();
+
         System.out.println("Digite o modelo do veiculo: ");
-        var modelo = leitura.nextLine();
+        var modelo = leitura.next();
+        leitura.nextLine();
         System.out.println("Digite a cor do veiculo: ");
         var cor = leitura.nextLine();
+        System.out.println("Digite a quantidade de passageiros: ");
+        var qtdPassageiros = leitura.nextInt();
         System.out.println("Digite a velocidade maxima do veiculo: ");
         var velocidade = leitura.nextFloat();
         System.out.println("Digite a quantidade de rodas do veiculo: ");
@@ -150,23 +176,26 @@ public class Teste {
 
     }
 
-    private void cadastrarCarga() {
+    private void cadastrarCarga() throws VeiculoExistException {
         var leitura = leituraClasse.scaneer;
+        System.out.println("Digite a placa do veiculo de carga: ");
+        var testaPlacaCarga = leitura.next();
+        var placaCarga = verificaPlaca(testaPlacaCarga);
+
+        System.out.println("Digite a marca do veiculo: ");
+        var marcaCarga = leitura.next();
+
+        System.out.println("Digite o modelo do veiculo: ");
+        var modeloCarga = leitura.nextLine();
+        leitura.nextLine();
+        System.out.println("Digite a cor do veiculo: ");
+        var corCarga = leitura.nextLine();
+
         System.out.println("Digite a carga Maxima");
         var cargaMaxima = leitura.nextInt();
         leitura.nextLine();
         System.out.println("Digite a Tara: ");
         var tara = leitura.nextInt();
-        System.out.println("Digite a placa do veiculo de Carga: ");
-        leitura.nextLine();
-        var placaCarga = leitura.nextLine();
-
-        System.out.println("Digite a marca do veiculo: ");
-        var marcaCarga = leitura.nextLine();
-        System.out.println("Digite o modelo do veiculo: ");
-        var modeloCarga = leitura.nextLine();
-        System.out.println("Digite a cor do veiculo: ");
-        var corCarga = leitura.nextLine();
         System.out.println("Digite a velocidade maxima do veiculo: ");
         var velocidadeCarga = leitura.nextFloat();
         System.out.println("Digite a quantidade de rodas do veiculo: ");
@@ -236,14 +265,12 @@ public class Teste {
         var placaPasseio = leitura.next();
         for (int i = 0; i < arrayPasseio.length; i++) {
             if (arrayPasseio[i] != null && arrayPasseio[i].getPlaca().equalsIgnoreCase(placaPasseio)) {
-                
+
                 System.out.println("PLACA ENCONTRADA!");
                 System.out.println("Imprimindo modelo com placa compativel:");
                 System.out.println(arrayPasseio[i]);
                 break;
-            }
-
-            else {
+            } else {
                 System.out.println("Placa NÃO encontrada!");
                 System.out.println("Voltando ao Menu");
                 break;
@@ -258,14 +285,12 @@ public class Teste {
         var placaCarga = leitura.next();
         for (int i = 0; i < arrayCarga.length; i++) {
             if (arrayCarga[i] != null && arrayCarga[i].getPlaca().equalsIgnoreCase(placaCarga)) {
-                
+
                 System.out.println("PLACA ENCONTRADA!");
                 System.out.println("Imprimindo modelo com placa compativel:");
                 System.out.println(arrayCarga[i]);
                 break;
-            }
-
-            else {
+            } else {
                 System.out.println("Placa NÃo encontrada!!");
                 System.out.println("Voltando ao Menu");
                 break;
@@ -276,7 +301,7 @@ public class Teste {
     }
 
     // Instanciando:
-    public static void main(String[] args) {
+    public static void main(String[] args) throws VeiculoExistException {
 
         Teste teste = new Teste();
         teste.exibeMenu();
