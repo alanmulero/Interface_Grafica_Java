@@ -18,8 +18,8 @@ import java.util.logging.Logger;
  */
 public class Teste {
 
-    Passeio[] arrayPasseio = new Passeio[5];
-    Carga[] arrayCarga = new Carga[5];
+   BDVeiculos bdPasseio = new BDVeiculos();
+   BDVeiculos bdCarga = new BDVeiculos();
     ArrayList<String> placas = new ArrayList<>();
     Leitura leituraClasse = new Leitura();
 
@@ -28,7 +28,7 @@ public class Teste {
     int countCarga = 0;
     boolean placaEncontrada = false;
 
-    public void exibeMenu() throws VeiculoExistException {
+    public void exibeMenu() throws VeiculoExistException, VelocException {
 
         while (opcao != 7) {
 
@@ -110,11 +110,11 @@ public class Teste {
         }
     }
 
-    private void cadastrarPasseio() throws VeiculoExistException {
+    private void cadastrarPasseio() throws VeiculoExistException, VelocException {
         var leitura = leituraClasse.scaneer;
         System.out.println("Digite a placa do veiculo de passeio: ");
         var testaPlaca = leitura.next();
-        
+
         var placa = verificaPlaca(testaPlaca);
 
         System.out.println("Digite a marca do veiculo: ");
@@ -128,8 +128,19 @@ public class Teste {
         var cor = leitura.nextLine();
         System.out.println("Digite a quantidade de passageiros: ");
         var qtdPassageiros = leitura.nextInt();
+
         System.out.println("Digite a velocidade maxima do veiculo: ");
         var velocidade = leitura.nextFloat();
+
+        if (velocidade < 80 || velocidade > 110) {
+            throw new VelocException("A Velocidade máxima está fora dos limites brasileiros");
+
+        }
+        
+        if(velocidade > 100){
+            throw new VelocException("A Velocidade maxima permitida para veiculos de passeio é de 100KM");
+        }
+
         System.out.println("Digite a quantidade de rodas do veiculo: ");
         var rodas = leitura.nextInt();
         System.out.println("Digite a quantidade de pistoes do veiculo: ");
@@ -146,7 +157,7 @@ public class Teste {
                 exibeMenu();
 
             } else {
-                arrayPasseio[countPasseio] = new Passeio(qtdPassageiros, placa, marca, modelo, cor, velocidade, rodas, pistao, potencia);
+                bdPasseio.getArrayPasseio()[countPasseio] = new Passeio(qtdPassageiros, placa, marca, modelo, cor, velocidade, rodas, pistao, potencia);
             }
             if (countPasseio > 5) {
                 throw new ArrayIndexOutOfBoundsException("O Vetor está cheio!!");
@@ -176,7 +187,7 @@ public class Teste {
 
     }
 
-    private void cadastrarCarga() throws VeiculoExistException {
+    private void cadastrarCarga() throws VeiculoExistException, VelocException {
         var leitura = leituraClasse.scaneer;
         System.out.println("Digite a placa do veiculo de carga: ");
         var testaPlacaCarga = leitura.next();
@@ -186,7 +197,7 @@ public class Teste {
         var marcaCarga = leitura.next();
 
         System.out.println("Digite o modelo do veiculo: ");
-        var modeloCarga = leitura.nextLine();
+        var modeloCarga = leitura.next();
         leitura.nextLine();
         System.out.println("Digite a cor do veiculo: ");
         var corCarga = leitura.nextLine();
@@ -214,7 +225,7 @@ public class Teste {
                 exibeMenu();
             } else {
 
-                arrayCarga[countCarga] = new Carga(cargaMaxima, tara, placaCarga, marcaCarga, modeloCarga, corCarga, velocidadeCarga, rodasCarga, pistaoCarga, potenciaCarga);
+                bdCarga.getArrayCarga()[countCarga] = new Carga(cargaMaxima, tara, placaCarga, marcaCarga, modeloCarga, corCarga, velocidadeCarga, rodasCarga, pistaoCarga, potenciaCarga);
             }
             if (countCarga > 5) {
                 throw new ArrayIndexOutOfBoundsException("O Vetor está cheio!!");
@@ -247,14 +258,14 @@ public class Teste {
 
     private void listarPasseio() {
         System.out.println("Listando os veiculos de passeio cadastrados.");
-        for (Passeio p : arrayPasseio) {
+        for (Passeio p : bdPasseio.getArrayPasseio()) {
             System.out.println(p);
         }
     }
 
     private void listarCarga() {
         System.out.println("Listando os veiculos de carga");
-        for (Carga c : arrayCarga) {
+        for (Carga c : bdCarga.getArrayCarga()) {
             System.out.println(c);
         }
     }
@@ -263,12 +274,12 @@ public class Teste {
         System.out.println("Digite a placa do veiculo de passeio que deseja encontrar: ");
         var leitura = leituraClasse.scaneer;
         var placaPasseio = leitura.next();
-        for (int i = 0; i < arrayPasseio.length; i++) {
-            if (arrayPasseio[i] != null && arrayPasseio[i].getPlaca().equalsIgnoreCase(placaPasseio)) {
+        for (int i = 0; i < bdPasseio.arrayPasseio.length; i++) {
+            if (bdPasseio.getArrayPasseio()[i] != null && bdPasseio.getArrayPasseio()[i].getPlaca().equalsIgnoreCase(placaPasseio)) {
 
                 System.out.println("PLACA ENCONTRADA!");
                 System.out.println("Imprimindo modelo com placa compativel:");
-                System.out.println(arrayPasseio[i]);
+                System.out.println(bdPasseio.arrayPasseio[i]);
                 break;
             } else {
                 System.out.println("Placa NÃO encontrada!");
@@ -283,12 +294,12 @@ public class Teste {
         System.out.println("Digite a placa do veiculo de CARGA que deseja encontrar: ");
         var leitura = leituraClasse.scaneer;
         var placaCarga = leitura.next();
-        for (int i = 0; i < arrayCarga.length; i++) {
-            if (arrayCarga[i] != null && arrayCarga[i].getPlaca().equalsIgnoreCase(placaCarga)) {
+        for (int i = 0; i < bdCarga.getArrayCarga().length; i++) {
+            if (bdCarga.getArrayCarga()[i] != null && bdCarga.getArrayCarga()[i].getPlaca().equalsIgnoreCase(placaCarga)) {
 
                 System.out.println("PLACA ENCONTRADA!");
                 System.out.println("Imprimindo modelo com placa compativel:");
-                System.out.println(arrayCarga[i]);
+                System.out.println(bdCarga.getArrayCarga()[i]);
                 break;
             } else {
                 System.out.println("Placa NÃo encontrada!!");
@@ -301,7 +312,7 @@ public class Teste {
     }
 
     // Instanciando:
-    public static void main(String[] args) throws VeiculoExistException {
+    public static void main(String[] args) throws VeiculoExistException, VelocException {
 
         Teste teste = new Teste();
         teste.exibeMenu();
