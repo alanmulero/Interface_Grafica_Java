@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 /**
  *
@@ -18,9 +21,14 @@ import java.util.logging.Logger;
  */
 public class Teste {
 
-   BDVeiculos bdPasseio = new BDVeiculos();
-   BDVeiculos bdCarga = new BDVeiculos();
-    ArrayList<String> placas = new ArrayList<>();
+    private static JFrame inicial = new JFrame("Janela Inicial");
+    private static JFrame passeio = new JFrame("Cadastro de Passeio");
+    private static JFrame carga = new JFrame("Cadastro de Carga");
+    private static JLabel optRotulo = new JLabel("Escolha um tipo de veiculo:  ");
+    private static JLabel rotuloEscolha = new JLabel("Escolha uma opção abaixo:  ");
+    private static BDVeiculos bdPasseio = new BDVeiculos();
+    private static BDVeiculos bdCarga = new BDVeiculos();
+    //ArrayList<String> placas = new ArrayList<>();
     Leitura leituraClasse = new Leitura();
 
     int opcao = -1;
@@ -30,18 +38,22 @@ public class Teste {
 
     public void exibeMenu() throws VeiculoExistException, VelocException {
 
-        while (opcao != 7) {
+        while (opcao != 9) {
 
             var menu = """
             ###################### Escolha uma opcao abaixo ####################
                        
-					1 - Cadastrar Veículo de Passeio
-					2 - Cadastrar Veículo de Carga
-					3 - Imprimir Todos os Veículos de Passeio
-					4 - Imprimir Todos os Veículos de Carga
-					5 - Imprimir Veículo de Passeio pela Placa
-					6 - Imprimir Veículo de Carga pela Placa
-					7 - Sair       
+                       
+            1 - Cadastrar Veículo de Passeio
+            2 - Cadastrar Veículo de Carga
+            3 - Imprimir Todos os Veículos de Passeio
+            4 - Imprimir Todos os Veículos de Carga
+            5 - Imprimir Veículo de Passeio pela Placa
+            6 - Imprimir Veículo de Carga pela Placa
+            7 - Excluir Veículo de Passeio pela Placa   
+            8 - Excluir Veículo de Carga pela Placa  
+            9 - Sair 
+                       
                        
             ####################################################################
 					""";
@@ -77,45 +89,51 @@ public class Teste {
                         break;
                     }
                 case 3:
-                    listarPasseio();
+                    bdPasseio.listarPasseio();
                     break;
                 case 4:
-                    listarCarga();
+                    bdCarga.listarCarga();
                     break;
                 case 5:
-                    imprimirPlacaPasseio();
+                    bdPasseio.imprimirPlacaPasseio();
                     break;
                 case 6:
-                    imprimirPlacaCarga();
+                    bdCarga.imprimirPlacaCarga();
                     break;
                 case 7:
+                    bdPasseio.excluirPasseioPlaca();
+                    break;
+                case 8:
+                    bdCarga.excluirCargaPlaca();
+                    break;
+                case 9:
                     System.out.println("Saindo do programa...");
+                    System.exit(0);
                     break;
 
                 default:
-                    System.out.println("Opção inválida. Digite numeros inteiros entre 0 e 7");
+                    System.out.println("Opção inválida. Digite numeros inteiros entre 0 e 9");
                     break;
             }
 
         }
     }
 
-    // Metodo para verificar placa
-    public String verificaPlaca(String testaPlaca) throws VeiculoExistException {
-
-        if (placas.contains(testaPlaca)) {
-            throw new VeiculoExistException(" Já existe um veículo com esta placa  ");
-        } else {
-            return testaPlaca;
-        }
-    }
-
+//    // Metodo para verificar placa
+//    public String verificaPlaca(String testaPlaca) throws VeiculoExistException {
+//
+//        if (placas.contains(testaPlaca)) {
+//            throw new VeiculoExistException(" Já existe um veículo com esta placa  ");
+//        } else {
+//            return testaPlaca;
+//        }
+//    }
     private void cadastrarPasseio() throws VeiculoExistException, VelocException {
         var leitura = leituraClasse.scaneer;
         System.out.println("Digite a placa do veiculo de passeio: ");
         var testaPlaca = leitura.next();
 
-        var placa = verificaPlaca(testaPlaca);
+        var placa = bdPasseio.verificaPlaca(testaPlaca);
 
         System.out.println("Digite a marca do veiculo: ");
         var marca = leitura.next();
@@ -136,8 +154,8 @@ public class Teste {
             throw new VelocException("A Velocidade máxima está fora dos limites brasileiros");
 
         }
-        
-        if(velocidade > 100){
+
+        if (velocidade > 100) {
             throw new VelocException("A Velocidade maxima permitida para veiculos de passeio é de 100KM");
         }
 
@@ -149,25 +167,11 @@ public class Teste {
         var potencia = leitura.nextInt();
         System.out.println("*********************************************");
 
-        try {
-            if (countPasseio > 0 && placas.contains(placa)) {
-                System.out.println("***********************");
-                System.out.println("Veiculo ja cadastrado!");
-                System.out.println("************************");
-                exibeMenu();
+        bdPasseio.getArrayPasseio().add(new Passeio(qtdPassageiros, placa, marca, modelo, cor, velocidade, rodas, pistao, potencia));
 
-            } else {
-                bdPasseio.getArrayPasseio()[countPasseio] = new Passeio(qtdPassageiros, placa, marca, modelo, cor, velocidade, rodas, pistao, potencia);
-            }
-            if (countPasseio > 5) {
-                throw new ArrayIndexOutOfBoundsException("O Vetor está cheio!!");
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Vetor cheio!!" + e.getMessage());
-        }
         countPasseio += 1;
-        placas.add(placa);
-        System.out.println("Voce pode registrar mais:  " + (5 - countPasseio) + " Veiculos de passeio.");
+        bdPasseio.placas.add(placa);
+        System.out.println("Voce ja registrou:  " + (countPasseio) + " Veiculos de passeio.");
 
         System.out.println("Deseja cadastrar um novo veiculo de passeio? Digite 1 para SIM ou 0 Para Não");
         var novoCadastro = leitura.nextInt();
@@ -178,7 +182,7 @@ public class Teste {
             exibeMenu();
         }
 
-        if (opcao == 7) {
+        if (opcao == 9) {
             System.out.println("Fim do programa");
             System.exit(0);
         } else {
@@ -191,7 +195,7 @@ public class Teste {
         var leitura = leituraClasse.scaneer;
         System.out.println("Digite a placa do veiculo de carga: ");
         var testaPlacaCarga = leitura.next();
-        var placaCarga = verificaPlaca(testaPlacaCarga);
+        var placaCarga = bdCarga.verificaPlaca(testaPlacaCarga);
 
         System.out.println("Digite a marca do veiculo: ");
         var marcaCarga = leitura.next();
@@ -217,26 +221,12 @@ public class Teste {
         var potenciaCarga = leitura.nextInt();
         System.out.println("*********************************************");
 
-        try {
-            if (countPasseio > 0 && placas.contains(placaCarga)) {
-                System.out.println("***********************");
-                System.out.println("Veiculo ja cadastrado!");
-                System.out.println("************************");
-                exibeMenu();
-            } else {
+        bdCarga.getArrayCarga().add(new Carga(cargaMaxima, tara, placaCarga, marcaCarga, modeloCarga, corCarga, velocidadeCarga, rodasCarga, pistaoCarga, potenciaCarga));
 
-                bdCarga.getArrayCarga()[countCarga] = new Carga(cargaMaxima, tara, placaCarga, marcaCarga, modeloCarga, corCarga, velocidadeCarga, rodasCarga, pistaoCarga, potenciaCarga);
-            }
-            if (countCarga > 5) {
-                throw new ArrayIndexOutOfBoundsException("O Vetor está cheio!!");
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Vetor cheio!!" + e.getMessage());
-        }
         countCarga += 1;
-        placas.add(placaCarga);
+        bdCarga.placas.add(placaCarga);
 
-        System.out.println("Voce pode registrar mais:  " + (5 - countCarga) + " Veiculos de Carga.");
+        System.out.println("Voce ja registrou:  " + (countCarga) + " Veiculos de Carga.");
         System.out.println("Deseja cadastrar um novo veiculo de Carga? Digite 1 para SIM ou 0 Para Não");
         var novoCadastro = leitura.nextInt();
 
@@ -246,7 +236,7 @@ public class Teste {
             exibeMenu();
         }
 
-        if (opcao == 7) {
+        if (opcao == 9) {
             System.out.println("Fim do programa");
             System.exit(0);
         }
@@ -256,66 +246,84 @@ public class Teste {
         }
     }
 
-    private void listarPasseio() {
-        System.out.println("Listando os veiculos de passeio cadastrados.");
-        for (Passeio p : bdPasseio.getArrayPasseio()) {
-            System.out.println(p);
-        }
-    }
-
-    private void listarCarga() {
-        System.out.println("Listando os veiculos de carga");
-        for (Carga c : bdCarga.getArrayCarga()) {
-            System.out.println(c);
-        }
-    }
-
-    private void imprimirPlacaPasseio() {
-        System.out.println("Digite a placa do veiculo de passeio que deseja encontrar: ");
-        var leitura = leituraClasse.scaneer;
-        var placaPasseio = leitura.next();
-        for (int i = 0; i < bdPasseio.arrayPasseio.length; i++) {
-            if (bdPasseio.getArrayPasseio()[i] != null && bdPasseio.getArrayPasseio()[i].getPlaca().equalsIgnoreCase(placaPasseio)) {
-
-                System.out.println("PLACA ENCONTRADA!");
-                System.out.println("Imprimindo modelo com placa compativel:");
-                System.out.println(bdPasseio.arrayPasseio[i]);
-                break;
-            } else {
-                System.out.println("Placa NÃO encontrada!");
-                System.out.println("Voltando ao Menu");
-                break;
-            }
-
-        }
-    }
-
-    private void imprimirPlacaCarga() {
-        System.out.println("Digite a placa do veiculo de CARGA que deseja encontrar: ");
-        var leitura = leituraClasse.scaneer;
-        var placaCarga = leitura.next();
-        for (int i = 0; i < bdCarga.getArrayCarga().length; i++) {
-            if (bdCarga.getArrayCarga()[i] != null && bdCarga.getArrayCarga()[i].getPlaca().equalsIgnoreCase(placaCarga)) {
-
-                System.out.println("PLACA ENCONTRADA!");
-                System.out.println("Imprimindo modelo com placa compativel:");
-                System.out.println(bdCarga.getArrayCarga()[i]);
-                break;
-            } else {
-                System.out.println("Placa NÃo encontrada!!");
-                System.out.println("Voltando ao Menu");
-                break;
-
-            }
-
-        }
-    }
-
     // Instanciando:
     public static void main(String[] args) throws VeiculoExistException, VelocException {
 
-        Teste teste = new Teste();
-        teste.exibeMenu();
+//        Teste teste = new Teste();
+//        teste.exibeMenu();
+//        
+        // Instanciando janelas
+        inicial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        inicial.setSize(300, 200);
+        inicial.setLayout(null);
+        inicial.add(optRotulo);
+        
+        // Botão de radio para escolher tipo de veiculo
+     
+
+        // Criando botões de rádio
+        JRadioButton passeio = new JRadioButton("Veiculo Passeio");
+        JRadioButton carga = new JRadioButton("Veiculo Carga");
+
+        // Posicionando
+        passeio.setBounds(30, 20, 200, 20);
+        carga.setBounds(30, 50, 200, 20);
+
+        // Agrupando os botões
+        ButtonGroup grupo = new ButtonGroup();
+        grupo.add(passeio);
+        grupo.add(carga);
+        
+            // Janela 1
+    class JanelaPasseio extends JFrame {
+        public JanelaPasseio() {
+            setTitle("Cadastro Passeio");
+            setSize(200, 100);
+            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            add(new JLabel("Você abriu a Janela Passeio"));
+            setVisible(true);
+        }
     }
 
-}
+    // Janela 2
+    class JanelaCarga extends JFrame {
+        public JanelaCarga() {
+            setTitle("Cadastro Carga");
+            setSize(200, 100);
+            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            add(new JLabel("Você abriu a Janela Carga"));
+            setVisible(true);
+        }
+    }
+       
+        
+
+        // Botão de confirmação
+        JButton confirmar = new JButton("Abrir");
+        confirmar.setBounds(100, 80, 80, 25);
+
+        confirmar.addActionListener(e -> {
+            if (passeio.isSelected()) {
+                new JanelaPasseio();
+            } else if (carga.isSelected()) {
+                new JanelaCarga();
+            }
+        });
+
+        // Adicionando componentes
+        inicial.add(passeio);
+        inicial.add(carga); // mudar aqui
+        inicial.add(confirmar);
+              // Ajustando os posicionamentos
+        inicial.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 15));
+        inicial.setVisible(true);
+        
+    }
+
+ 
+   
+
+       
+    }
+
+

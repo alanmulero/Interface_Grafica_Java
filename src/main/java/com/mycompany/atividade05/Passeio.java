@@ -10,7 +10,7 @@ import java.text.DecimalFormat;
  *
  * @author alan
  */
-public final class Passeio extends Veiculo implements Calcular {
+public final class Passeio extends Veiculo implements Calcular,Comparable<Passeio> {
 
     private int qtdPassageiros;
     
@@ -70,6 +70,11 @@ public final class Passeio extends Veiculo implements Calcular {
         somaLetra += getCor().length();
         return somaLetra;
             
+    }
+
+    @Override
+    public int compareTo(Passeio o) {
+        return this.getPlaca().compareTo(o.getPlaca());
     }
 
 }
