@@ -28,6 +28,7 @@ public class Teste {
     private static JLabel rotuloEscolha = new JLabel("Escolha uma opção abaixo:  ");
     private static BDVeiculos bdPasseio = new BDVeiculos();
     private static BDVeiculos bdCarga = new BDVeiculos();
+
     //ArrayList<String> placas = new ArrayList<>();
     Leitura leituraClasse = new Leitura();
 
@@ -253,6 +254,7 @@ public class Teste {
 //        teste.exibeMenu();
 //        
         // Instanciando janelas
+
         inicial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         inicial.setSize(300, 200);
         inicial.setLayout(null);
@@ -264,24 +266,77 @@ public class Teste {
         // Criando botões de rádio
         JRadioButton passeio = new JRadioButton("Veiculo Passeio");
         JRadioButton carga = new JRadioButton("Veiculo Carga");
-
+        JRadioButton sair = new JRadioButton("Sair");
         // Posicionando
         passeio.setBounds(30, 20, 200, 20);
         carga.setBounds(30, 50, 200, 20);
+        sair.setBounds(30, 70, 200, 20);
 
         // Agrupando os botões
         ButtonGroup grupo = new ButtonGroup();
         grupo.add(passeio);
         grupo.add(carga);
+        grupo.add(sair);
         
             // Janela 1
     class JanelaPasseio extends JFrame {
         public JanelaPasseio() {
+
+            // Campos de texto
+            JTextField campoPlaca = new JTextField();
+            JTextField campoMarca = new JTextField();
+            JTextField campoModelo = new JTextField();
+            JTextField campoCor = new JTextField();
+            JTextField campoQtdPassageiros = new JTextField();
+            JTextField campoVelocidade = new JTextField();
+            JTextField campoRodas = new JTextField();
+            JTextField campoPistao = new JTextField();
+            JTextField campoPotencia = new JTextField();
+
+            // Adicionando os campos
+            add(new JLabel("Placa:"));
+            add(campoPlaca);
+            add(new JLabel("Marca:"));
+            add(campoMarca);
+            add(new JLabel("Modelo:"));
+            add(campoModelo);
+            add(new JLabel("Cor:"));
+            add(campoCor);
+            add(new JLabel("Quantidade de Passageiros:"));
+            add(campoQtdPassageiros);
+            add(new JLabel("Velocidade Máxima:"));
+            add(campoVelocidade);
+            add(new JLabel("Rodas:"));
+            add(campoRodas);
+            add(new JLabel("Pistão:"));
+            add(campoPistao);
+            add(new JLabel("Potência:"));
+            add(campoPotencia);
+            
+
+            // Botão
+            JButton botaoCadastrar = new JButton("Cadastrar");
+
+            add(botaoCadastrar);
             setTitle("Cadastro Passeio");
             setSize(200, 100);
             setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            add(new JLabel("Você abriu a Janela Passeio"));
+            setLayout(new FlowLayout());
+
+            campoPlaca.setPreferredSize(new Dimension(150, 25));
+            campoMarca.setPreferredSize(new Dimension(150, 25));
+            campoModelo.setPreferredSize(new Dimension(150, 25));
+            campoCor.setPreferredSize(new Dimension(150, 25));
+            campoQtdPassageiros.setPreferredSize(new Dimension(150, 25));
+            campoVelocidade.setPreferredSize(new Dimension(150, 25));
+            campoRodas.setPreferredSize(new Dimension(150, 25));
+            campoPistao.setPreferredSize(new Dimension(150, 25));
+            campoPotencia.setPreferredSize(new Dimension(150, 25));
+
+
+
             setVisible(true);
+
         }
     }
 
@@ -295,6 +350,14 @@ public class Teste {
             setVisible(true);
         }
     }
+
+    // sair
+        sair.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               System.exit(0);
+
+            }
+        });
        
         
 
@@ -314,6 +377,7 @@ public class Teste {
         inicial.add(passeio);
         inicial.add(carga); // mudar aqui
         inicial.add(confirmar);
+        inicial.add(sair);
               // Ajustando os posicionamentos
         inicial.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 15));
         inicial.setVisible(true);
