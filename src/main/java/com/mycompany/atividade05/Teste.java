@@ -12,12 +12,10 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- *
  * @author alan toledo alan.mulero@gmail.com
- *
+ * <p>
  * Atividade 7, dando continuidade na atividade 05. Implantando o tratamento de
  * Exceções.
- *
  */
 public class Teste {
 
@@ -29,7 +27,8 @@ public class Teste {
     private static BDVeiculos bdPasseio = new BDVeiculos();
     private static BDVeiculos bdCarga = new BDVeiculos();
 
-    //ArrayList<String> placas = new ArrayList<>();
+    static ArrayList<String> placas = new ArrayList<>();
+
     Leitura leituraClasse = new Leitura();
 
     int opcao = -1;
@@ -42,22 +41,22 @@ public class Teste {
         while (opcao != 9) {
 
             var menu = """
-            ###################### Escolha uma opcao abaixo ####################
-                       
-                       
-            1 - Cadastrar Veículo de Passeio
-            2 - Cadastrar Veículo de Carga
-            3 - Imprimir Todos os Veículos de Passeio
-            4 - Imprimir Todos os Veículos de Carga
-            5 - Imprimir Veículo de Passeio pela Placa
-            6 - Imprimir Veículo de Carga pela Placa
-            7 - Excluir Veículo de Passeio pela Placa   
-            8 - Excluir Veículo de Carga pela Placa  
-            9 - Sair 
-                       
-                       
-            ####################################################################
-					""";
+                           ###################### Escolha uma opcao abaixo ####################
+                    
+                    
+                           1 - Cadastrar Veículo de Passeio
+                           2 - Cadastrar Veículo de Carga
+                           3 - Imprimir Todos os Veículos de Passeio
+                           4 - Imprimir Todos os Veículos de Carga
+                           5 - Imprimir Veículo de Passeio pela Placa
+                           6 - Imprimir Veículo de Carga pela Placa
+                           7 - Excluir Veículo de Passeio pela Placa   
+                           8 - Excluir Veículo de Carga pela Placa  
+                           9 - Sair 
+                    
+                    
+                           ####################################################################
+                    """;
 
             System.out.println(menu);
             try {
@@ -120,15 +119,17 @@ public class Teste {
         }
     }
 
-//    // Metodo para verificar placa
-//    public String verificaPlaca(String testaPlaca) throws VeiculoExistException {
-//
-//        if (placas.contains(testaPlaca)) {
-//            throw new VeiculoExistException(" Já existe um veículo com esta placa  ");
-//        } else {
-//            return testaPlaca;
-//        }
-//    }
+    // Metodo para verificar placa
+    public static String verificaPlaca(String testaPlaca) throws VeiculoExistException {
+
+        if (placas.contains(testaPlaca)) {
+            throw new VeiculoExistException(" Já existe um veículo com esta placa  ");
+        } else {
+            return testaPlaca;
+        }
+    }
+
+
     private void cadastrarPasseio() throws VeiculoExistException, VelocException {
         var leitura = leituraClasse.scaneer;
         System.out.println("Digite a placa do veiculo de passeio: ");
@@ -256,17 +257,18 @@ public class Teste {
         // Instanciando janelas
 
         inicial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        inicial.setSize(300, 200);
+        inicial.setSize(350, 250);
         inicial.setLayout(null);
         inicial.add(optRotulo);
-        
+
         // Botão de radio para escolher tipo de veiculo
-     
+
 
         // Criando botões de rádio
         JRadioButton passeio = new JRadioButton("Veiculo Passeio");
         JRadioButton carga = new JRadioButton("Veiculo Carga");
-        JRadioButton sair = new JRadioButton("Sair");
+        //JRadioButton sair = new JRadioButton("Sair");
+        JButton sair = new JButton("Sair");
         // Posicionando
         passeio.setBounds(30, 20, 200, 20);
         carga.setBounds(30, 50, 200, 20);
@@ -277,89 +279,285 @@ public class Teste {
         grupo.add(passeio);
         grupo.add(carga);
         grupo.add(sair);
-        
-            // Janela 1
-    class JanelaPasseio extends JFrame {
-        public JanelaPasseio() {
 
-            // Campos de texto
-            JTextField campoPlaca = new JTextField();
-            JTextField campoMarca = new JTextField();
-            JTextField campoModelo = new JTextField();
-            JTextField campoCor = new JTextField();
-            JTextField campoQtdPassageiros = new JTextField();
-            JTextField campoVelocidade = new JTextField();
-            JTextField campoRodas = new JTextField();
-            JTextField campoPistao = new JTextField();
-            JTextField campoPotencia = new JTextField();
+        // Janela 1
+        class JanelaPasseio extends JFrame {
+            public JanelaPasseio() {
 
-            // Adicionando os campos
-            add(new JLabel("Placa:"));
-            add(campoPlaca);
-            add(new JLabel("Marca:"));
-            add(campoMarca);
-            add(new JLabel("Modelo:"));
-            add(campoModelo);
-            add(new JLabel("Cor:"));
-            add(campoCor);
-            add(new JLabel("Quantidade de Passageiros:"));
-            add(campoQtdPassageiros);
-            add(new JLabel("Velocidade Máxima:"));
-            add(campoVelocidade);
-            add(new JLabel("Rodas:"));
-            add(campoRodas);
-            add(new JLabel("Pistão:"));
-            add(campoPistao);
-            add(new JLabel("Potência:"));
-            add(campoPotencia);
-            
+                // Campos de texto
+                JTextField campoPlaca = new JTextField();
+                JTextField campoMarca = new JTextField();
+                JTextField campoModelo = new JTextField();
+                JTextField campoCor = new JTextField();
+                JTextField campoQtdPassageiros = new JTextField();
+                JTextField campoVelocidade = new JTextField();
+                JTextField campoRodas = new JTextField();
+                JTextField campoPistao = new JTextField();
+                JTextField campoPotencia = new JTextField();
 
-            // Botão
-            JButton botaoCadastrar = new JButton("Cadastrar");
-
-            add(botaoCadastrar);
-            setTitle("Cadastro Passeio");
-            setSize(200, 100);
-            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            setLayout(new FlowLayout());
-
-            campoPlaca.setPreferredSize(new Dimension(150, 25));
-            campoMarca.setPreferredSize(new Dimension(150, 25));
-            campoModelo.setPreferredSize(new Dimension(150, 25));
-            campoCor.setPreferredSize(new Dimension(150, 25));
-            campoQtdPassageiros.setPreferredSize(new Dimension(150, 25));
-            campoVelocidade.setPreferredSize(new Dimension(150, 25));
-            campoRodas.setPreferredSize(new Dimension(150, 25));
-            campoPistao.setPreferredSize(new Dimension(150, 25));
-            campoPotencia.setPreferredSize(new Dimension(150, 25));
+                // Adicionando os campos
+                add(new JLabel("Placa:"));
+                add(campoPlaca);
+                add(new JLabel("Marca:"));
+                add(campoMarca);
+                add(new JLabel("Modelo:"));
+                add(campoModelo);
+                add(new JLabel("Cor:"));
+                add(campoCor);
+                add(new JLabel("Quantidade de Passageiros:"));
+                add(campoQtdPassageiros);
+                add(new JLabel("Velocidade Máxima:"));
+                add(campoVelocidade);
+                add(new JLabel("Rodas:"));
+                add(campoRodas);
+                add(new JLabel("Pistão:"));
+                add(campoPistao);
+                add(new JLabel("Potência:"));
+                add(campoPotencia);
 
 
+                // Botão
+                JButton botaoCadastrar = new JButton("Cadastrar");
+                JButton limparCampos = new JButton("Limpar Campos");
+                JButton botaoFechar = new JButton("Fechar Janela");
 
-            setVisible(true);
+                botaoCadastrar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
 
+                        // Cadastrando
+                        try {
+                            String placa = campoPlaca.getText();
+
+                            if (placas.contains(placa)) {
+                                throw new VeiculoExistException(" Já existe um veículo com esta placa  ");
+                            }
+                            if ( placa.isEmpty()) {
+                                JOptionPane.showMessageDialog(null, "O campo PLACA não pode ficar em branco.", "Erro de validação", JOptionPane.WARNING_MESSAGE);
+                                campoPlaca.requestFocus();
+                                return;
+                            } else {
+                                placas.add(placa);
+                            }
+                            String marca = campoMarca.getText();
+                            String modelo = campoModelo.getText();
+                            String cor = campoCor.getText();
+                            int qtdPassageiros = Integer.parseInt(campoQtdPassageiros.getText());
+                            float velocidade = Float.parseFloat(campoVelocidade.getText());
+                            if (velocidade < 80 || velocidade > 110) {
+                                throw new VelocException("A Velocidade Minima ou  Máxima está fora dos limites brasileiros");
+                            }
+                            if (velocidade > 100) {
+                                throw new VelocException("A Velocidade maxima permitida para veiculos de passeio é de 100KM");
+                            }
+                            int rodas = Integer.parseInt(campoRodas.getText());
+                            int pistao = Integer.parseInt(campoPistao.getText());
+                            int potencia = Integer.parseInt(campoPotencia.getText());
+                            bdPasseio.getArrayPasseio().add(new Passeio(qtdPassageiros, placa, marca, modelo, cor, velocidade, rodas, pistao, potencia));
+                            JOptionPane.showMessageDialog(null, "Veiculo cadastrado com sucesso!");
+
+                            bdPasseio.getArrayPasseio().forEach(System.out::println);
+                            campoPlaca.requestFocus();
+
+
+                        } catch (NumberFormatException | VeiculoExistException | VelocException ex) {
+                            JOptionPane.showMessageDialog(null, "Erro de VeiculoExistException ou Entrada de daos inconpativél : " + ex.getMessage());
+                            return;
+                        }
+
+
+                    }
+                });
+
+                // sets da janela
+                setExtendedState(JFrame.MAXIMIZED_BOTH);
+                add(botaoCadastrar);
+                add(limparCampos);
+                add(botaoFechar);
+                setTitle("Cadastro Passeio");
+                setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                setLayout(new FlowLayout());
+
+                campoPlaca.setPreferredSize(new Dimension(150, 25));
+                campoMarca.setPreferredSize(new Dimension(150, 25));
+                campoModelo.setPreferredSize(new Dimension(150, 25));
+                campoCor.setPreferredSize(new Dimension(150, 25));
+                campoQtdPassageiros.setPreferredSize(new Dimension(150, 25));
+                campoVelocidade.setPreferredSize(new Dimension(150, 25));
+                campoRodas.setPreferredSize(new Dimension(150, 25));
+                campoPistao.setPreferredSize(new Dimension(150, 25));
+                campoPotencia.setPreferredSize(new Dimension(150, 25));
+
+                // Botão para limpar campos
+                limparCampos.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        campoPlaca.setText("");
+                        campoMarca.setText("");
+                        campoModelo.setText("");
+                        campoCor.setText("");
+                        campoQtdPassageiros.setText("");
+                        campoVelocidade.setText("");
+                        campoRodas.setText("");
+                        campoPistao.setText("");
+                        campoPotencia.setText("");
+
+                    }
+                });
+
+                botaoFechar.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JanelaPasseio.this.dispose();
+                    }
+                });
+
+
+                setVisible(true);
+
+            }
         }
-    }
 
-    // Janela 2
-    class JanelaCarga extends JFrame {
-        public JanelaCarga() {
-            setTitle("Cadastro Carga");
-            setSize(200, 100);
-            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            add(new JLabel("Você abriu a Janela Carga"));
-            setVisible(true);
+        // Janela 2
+        class JanelaCarga extends JFrame {
+            public JanelaCarga() {
+
+                // Campos de texto
+                JTextField campoPlaca = new JTextField();
+                JTextField campoMarca = new JTextField();
+                JTextField campoModelo = new JTextField();
+                JTextField campoCor = new JTextField();
+                JTextField campoCarga = new JTextField();
+                JTextField campoTara = new JTextField();
+                JTextField campoVelocidade = new JTextField();
+                JTextField campoRodas = new JTextField();
+                JTextField pistao = new JTextField();
+                JTextField campoPotencia = new JTextField();
+
+                // Adicionando os campos
+                add(new JLabel("Placa:"));
+                add(campoPlaca);
+                add(new JLabel("Marca:"));
+                add(campoMarca);
+                add(new JLabel("Modelo:"));
+                add(campoModelo);
+                add(new JLabel("Cor:"));
+                add(campoCor);
+                add(new JLabel("Carga Maxima:"));
+                add(campoCarga);
+                add(new JLabel("Tara:"));
+                add(campoTara);
+                add(new JLabel("Velocidade Máxima:"));
+                add(campoVelocidade);
+                add(new JLabel("Rodas:"));
+                add(campoRodas);
+                add(new JLabel("Pistão:"));
+                add(pistao);
+                add(new JLabel("Potência:"));
+                add(campoPotencia);
+
+
+                // Botão
+                JButton botaoCadastrar = new JButton("Cadastrar");
+                JButton limparCampos = new JButton("Limpar Campos");
+                JButton botaoFechar = new JButton("Fechar Janela");
+
+                botaoCadastrar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+
+                        // Cadastrando
+                        try {
+                            String placa = campoPlaca.getText();
+
+                            if (placas.contains(placa)) {
+                                throw new VeiculoExistException(" Já existe um veículo com esta placa  ");
+                            }
+                            if ( placa.isEmpty()) {
+                                JOptionPane.showMessageDialog(null, "O campo PLACA não pode ficar em branco.", "Erro de validação", JOptionPane.WARNING_MESSAGE);
+                                campoPlaca.requestFocus();
+                                return;
+                            } else {
+                                placas.add(placa);
+                            }
+                            String marca = campoMarca.getText();
+                            String modelo = campoModelo.getText();
+                            String cor = campoCor.getText();
+                            int carga = Integer.parseInt(campoCarga.getText());
+                            int tara = Integer.parseInt(campoTara.getText());
+                            float velocidade = Float.parseFloat(campoVelocidade.getText());
+                            if (velocidade < 80 || velocidade > 110) {
+                                throw new VelocException("A Velocidade Minima ou  Máxima está fora dos limites brasileiros");
+                            }
+                            if (velocidade > 100) {
+                                throw new VelocException("A Velocidade maxima permitida para veiculos de passeio é de 100KM");
+                            }
+                            int rodas = Integer.parseInt(campoRodas.getText());
+                            int campoPistao = Integer.parseInt(pistao.getText());
+                            int potencia = Integer.parseInt(campoPotencia.getText());
+                            bdPasseio.getArrayCarga().add(new Carga(placa, marca, modelo, cor, carga, tara, velocidade, rodas, campoPistao, potencia));
+                            JOptionPane.showMessageDialog(null, "Veiculo cadastrado com sucesso!");
+
+                            bdPasseio.getArrayCarga().forEach(System.out::println);
+                            campoPlaca.requestFocus();
+
+
+                        } catch (NumberFormatException | VeiculoExistException | VelocException ex) {
+                            JOptionPane.showMessageDialog(null, "Erro de VeiculoExistException ou Entrada de daos inconpativél : " + ex.getMessage());
+                            return;
+                        }
+
+
+                    }
+                });
+
+                // sets da janela
+                setExtendedState(JFrame.MAXIMIZED_BOTH);
+                add(botaoCadastrar);
+                add(limparCampos);
+                add(botaoFechar);
+                setTitle("Cadastro Carga");
+                setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                setLayout(new FlowLayout());
+
+                campoPlaca.setPreferredSize(new Dimension(150, 25));
+                campoMarca.setPreferredSize(new Dimension(150, 25));
+                campoModelo.setPreferredSize(new Dimension(150, 25));
+                campoCor.setPreferredSize(new Dimension(150, 25));
+                campoCarga.setPreferredSize(new Dimension(150, 25));
+                campoTara.setPreferredSize(new Dimension(150, 25));
+                campoVelocidade.setPreferredSize(new Dimension(150, 25));
+                campoRodas.setPreferredSize(new Dimension(150, 25));
+                pistao.setPreferredSize(new Dimension(150, 25));
+                campoPotencia.setPreferredSize(new Dimension(150, 25));
+
+                // Botão para limpar campos
+                limparCampos.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        campoPlaca.setText("");
+                        campoMarca.setText("");
+                        campoModelo.setText("");
+                        campoCor.setText("");
+                        campoCarga.setText("");
+                        campoTara.setText("");
+                        campoVelocidade.setText("");
+                        campoRodas.setText("");
+                        pistao.setText("");
+                        campoPotencia.setText("");
+
+                    }
+                });
+
+
+                setVisible(true);
+            }
         }
-    }
 
-    // sair
+        // sair
         sair.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               System.exit(0);
+                System.exit(0);
 
             }
         });
-       
-        
+
 
         // Botão de confirmação
         JButton confirmar = new JButton("Abrir");
@@ -378,16 +576,13 @@ public class Teste {
         inicial.add(carga); // mudar aqui
         inicial.add(confirmar);
         inicial.add(sair);
-              // Ajustando os posicionamentos
+        // Ajustando os posicionamentos
         inicial.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 15));
         inicial.setVisible(true);
-        
+
     }
 
- 
-   
 
-       
-    }
+}
 
 

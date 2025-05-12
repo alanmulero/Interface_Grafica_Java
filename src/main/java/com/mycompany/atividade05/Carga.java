@@ -20,13 +20,19 @@ public final class Carga extends Veiculo implements Calcular {
         this.tara = 0;
     }
 
-    public Carga(int cargaMax, int tara, String placa, String marca, String modelo, String cor, float velocMax, int qtdRodas, int qtdpistao, int potencia) {
-        super(placa, marca, modelo, cor, velocMax, qtdRodas, qtdpistao, potencia);
+
+
+    public Carga(int cargaMax, int tara, String placa, String marca, String modelo, String cor, float velocMax, int qtdRodas, int pistao, int potencia) {
+        super(placa, marca, modelo, cor, velocMax, qtdRodas, pistao, potencia);
         this.cargaMax = cargaMax;
         this.tara = tara;
         this.calcVel(velocMax);
         System.out.println("Quantidade total de soma dos inteiros:  "+this.calcular());
     }
+
+    public Carga(String placa, String marca, String modelo, String cor, int carga, int tara, float velocidade, int rodas, int pistao, int potencia) {
+    }
+
 
     public int getCargaMax() {
         return cargaMax;
@@ -63,7 +69,7 @@ public final class Carga extends Veiculo implements Calcular {
                 + "Cor: " + super.getCor() + "\n"
                 + "Velocidade: " + super.getVelocMax() + "  Convertida para CENTIMETROS por hora:  " + df.format(getVelocMax() * 100000)+ "\n"
                 + "Quantidade de Rodas: " + super.getQtdRodas() + "\n"
-                + "Quantidade de pistoes: " + super.getMotor().getQtdPistao() + "\n"
+                + "Quantidade de pistoes: " + super.getMotor().getPistao() + "\n"
                 + "Potencia do motor: " + super.getMotor().getPotencia()+"\n"
                 + "Metodo calcular Somando inteiros: " + this.calcular()+"\n"
                 + "*******************************************"
@@ -76,7 +82,7 @@ public final class Carga extends Veiculo implements Calcular {
         int somaNum = 0;
         
         somaNum += getMotor().getPotencia();
-        somaNum += getMotor().getQtdPistao();
+        somaNum += getMotor().getPistao();
         somaNum += getQtdRodas();
         somaNum += getVelocMax();
         somaNum += getTara();

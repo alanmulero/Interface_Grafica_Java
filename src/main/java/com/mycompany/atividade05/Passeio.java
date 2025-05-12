@@ -52,7 +52,7 @@ public final class Passeio extends Veiculo implements Calcular,Comparable<Passei
                 + "Cor: " + super.getCor() + "\n"
                 + "Velocidade: " + super.getVelocMax() +  "==> Convertida para metros por hora:  " + (getVelocMax() * 1000) +"\n"
                 + "Quantidade de Rodas: " + super.getQtdRodas() + "\n"
-                + "Quantidade de pistoes: " + super.getMotor().getQtdPistao() + "\n"
+                + "Quantidade de pistoes: " + super.getMotor().getPistao() + "\n"
                 + "Potencia do motor: " + super.getMotor().getPotencia()+"\n"
                  + "Metodo calcular Somando Letras: " + this.calcular()+"\n"
                 + "*******************************************"

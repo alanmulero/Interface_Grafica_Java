@@ -10,27 +10,27 @@ package com.mycompany.atividade05;
  */
 public class Motor {
     
-    private int qtdPistao;
+    private int pistao;
     private int potencia;
 
     public Motor() {
-        this.qtdPistao = 0;
+        this.pistao = 0;
         this.potencia = 0;
     }
 
-    public Motor(int qtdPistao, int potencia) {
-        this.qtdPistao = qtdPistao;
+    public Motor(int pistaoistao, int potencia) {
+        this.pistao = pistao;
         this.potencia = potencia;
     }
 
-    public int getQtdPistao() {
-        return qtdPistao;
+    public int getPistao() {
+        return pistao;
     }
 
    
 
     public final void setQtdpistao(int qtdpistao) {
-        this.qtdPistao = qtdPistao;
+        this.pistao = pistao;
     }
 
     public int getPotencia() {
@@ -45,7 +45,7 @@ public class Motor {
 
     @Override
     public String toString() {
-        return "Motor{" + "Quantidade de pistao do motor: = " + qtdPistao + ",Valor da  potencia = " + potencia + '}';
+        return "Motor{" + "Quantidade de pistao do motor: = " + pistao + ",Valor da  potencia = " + potencia + '}';
     }
     
 }

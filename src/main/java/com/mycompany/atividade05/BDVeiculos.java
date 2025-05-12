@@ -16,7 +16,7 @@ public class BDVeiculos {
 
     private List<Passeio> arrayPasseio = new ArrayList<>();
     private List<Carga> arrayCarga = new ArrayList<>();
-    ArrayList<String> placas = new ArrayList<>();
+    static ArrayList<String> placas = new ArrayList<>();
     Scanner leitura = new Scanner(System.in);
 
     public List getArrayPasseio() {
@@ -38,7 +38,7 @@ public class BDVeiculos {
 // Métodos para manipular a List
     
        // Metodo para verificar placa
-    public String verificaPlaca(String testaPlaca) throws VeiculoExistException {
+    public static String verificaPlaca(String testaPlaca) throws VeiculoExistException {
 
         if (placas.contains(testaPlaca)) {
             throw new VeiculoExistException(" Já existe um veículo com esta placa  ");
