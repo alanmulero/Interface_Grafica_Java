@@ -18,19 +18,19 @@ public class Motor {
         this.potencia = 0;
     }
 
-    public Motor(int pistaoistao, int potencia) {
+    public Motor(int pistao, int potencia) {
         this.pistao = pistao;
         this.potencia = potencia;
     }
+
 
     public int getPistao() {
         return pistao;
     }
 
-   
-
-    public final void setQtdpistao(int qtdpistao) {
+    public final void setQtdpistao(int pistao) {
         this.pistao = pistao;
+        
     }
 
     public int getPotencia() {
@@ -40,12 +40,14 @@ public class Motor {
     public final void setPotencia(int potencia) {
         this.potencia = potencia;
     }
+
+	@Override
+	public String toString() {
+		return "Motor [pistao=" + pistao + ", potencia=" + potencia + "]";
+	}
     
     
 
-    @Override
-    public String toString() {
-        return "Motor{" + "Quantidade de pistao do motor: = " + pistao + ",Valor da  potencia = " + potencia + '}';
-    }
+ 
     
 }
