@@ -170,6 +170,7 @@ public class Teste {
 
 		bdPasseio.getArrayPasseio()
 				.add(new Passeio(qtdPassageiros, placa, marca, modelo, cor, velocidade, rodas, pistao, potencia));
+		bdPasseio.getArrayPasseio().forEach(System.out::println);
 
 		countPasseio += 1;
 		bdPasseio.placas.add(placa);
@@ -258,7 +259,7 @@ public class Teste {
 		// Instanciando janelas
 
 		inicial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		inicial.setSize(350, 250);
+		inicial.setSize(330, 180);
 		inicial.setLayout(null);
 		inicial.add(optRotulo);
 
@@ -280,21 +281,22 @@ public class Teste {
 		grupo.add(carga);
 		grupo.add(sair);
 
-		// Janela 1
+		// Janela 1 ************************************ Veiculo Passeio
 		class JanelaPasseio extends JFrame {
+
 			public JanelaPasseio() {
 
 				// Campos de texto
-				JTextField campoPlaca = new JTextField();
-				JTextField consultaPlaca = new JTextField();
-				JTextField campoMarca = new JTextField();
-				JTextField campoModelo = new JTextField();
-				JTextField campoCor = new JTextField();
-				JTextField campoQtdPassageiros = new JTextField();
-				JTextField campoVelocidade = new JTextField();
-				JTextField campoRodas = new JTextField();
-				JTextField campoPistao = new JTextField();
-				JTextField campoPotencia = new JTextField();
+				JTextField campoPlaca = new JTextField(5);
+				JTextField consultaPlaca = new JTextField(5);
+				JTextField campoMarca = new JTextField(5);
+				JTextField campoModelo = new JTextField(5);
+				JTextField campoCor = new JTextField(5);
+				JTextField campoQtdPassageiros = new JTextField(5);
+				JTextField campoVelocidade = new JTextField(3);
+				JTextField campoRodas = new JTextField(5);
+				JTextField campoPistao = new JTextField(5);
+				JTextField campoPotencia = new JTextField(5);
 
 				// Adicionando os campos
 				add(new JLabel("Placa:"));
@@ -317,13 +319,12 @@ public class Teste {
 				add(campoPotencia);
 
 				// Botão
-				JButton botaoCadastrar = new JButton("Cadastrar");
 
+				JButton botaoCadastrar = new JButton("Cadastrar");
 				JButton limparCampos = new JButton("Limpar Campos");
 				JButton botaoFechar = new JButton("Fechar Janela");
-				add(new JLabel(" Consulta Placa:"));
-				add(consultaPlaca);
-				JButton consultarPlaca = new JButton("Consulta Placa");
+				JButton BotaoConsultarPlaca = new JButton("Consulta Placa");
+
 				botaoCadastrar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 
@@ -345,7 +346,7 @@ public class Teste {
 							String marca = campoMarca.getText();
 							String modelo = campoModelo.getText();
 							String cor = campoCor.getText();
-							
+
 							int qtdPassageiros = Integer.parseInt(campoQtdPassageiros.getText());
 							float velocidade = Float.parseFloat(campoVelocidade.getText());
 							if (velocidade < 80 || velocidade > 110) {
@@ -377,11 +378,15 @@ public class Teste {
 				});
 
 				// sets da janela
-				setExtendedState(JFrame.MAXIMIZED_BOTH);
-				add(consultarPlaca);
+				// setExtendedState(JFrame.MAXIMIZED_BOTH);
+				setSize(700, 300);
+
 				add(botaoCadastrar);
 				add(limparCampos);
 				add(botaoFechar);
+				add(new JLabel(" Consulta Placa:"));
+				add(consultaPlaca);
+				add(BotaoConsultarPlaca);
 				setTitle("Cadastro Passeio");
 				setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				setLayout(new FlowLayout());
@@ -424,13 +429,18 @@ public class Teste {
 				});
 
 				// Consultar placa
-				consultarPlaca.addActionListener(new ActionListener() {
+
+				BotaoConsultarPlaca.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						String consPlaca = consultaPlaca.getText();
-						for(int i = 0; i < bdPasseio.getArrayPasseio().size();i++)
-						if(placas.contains(consPlaca)) {
+						Passeio passeio = new Passeio();
+						for (int i = 0; i < bdPasseio.getArrayPasseio().size(); i++)
+							passeio = (Passeio) bdPasseio.getArrayPasseio().get(i);
+						if (passeio.getPlaca().equalsIgnoreCase(consPlaca)) {
 							JOptionPane.showMessageDialog(null, "Placa encontrada");
-						}else {
+							JOptionPane.showMessageDialog(null, passeio.toString());
+
+						} else {
 							JOptionPane.showMessageDialog(null, "Placa não encontrada");
 						}
 						setVisible(true);
@@ -442,20 +452,21 @@ public class Teste {
 			}
 		}
 
-		// Janela 2 Carga
+		// Janela 2 Carga ##################################################
 		class JanelaCarga extends JFrame {
 			public JanelaCarga() {
 
-				JTextField campoPlaca = new JTextField();
-				JTextField campoMarca = new JTextField();
-				JTextField campoModelo = new JTextField();
-				JTextField campoCor = new JTextField();
-				JTextField campoCargaMaxima = new JTextField();
-				JTextField campoTara = new JTextField();
-				JTextField campoVelocidade = new JTextField();
-				JTextField campoRodas = new JTextField();
-				JTextField campoPistao = new JTextField();
-				JTextField campoPotencia = new JTextField();
+				JTextField campoPlaca = new JTextField(5);
+				JTextField campoMarca = new JTextField(5);
+				JTextField campoModelo = new JTextField(5);
+				JTextField campoCor = new JTextField(5);
+				JTextField campoCargaMaxima = new JTextField(5);
+				JTextField campoTara = new JTextField(5);
+				JTextField campoVelocidade = new JTextField(5);
+				JTextField campoRodas = new JTextField(5);
+				JTextField campoPistao = new JTextField(5);
+				JTextField campoPotencia = new JTextField(5);
+				JTextField consultaPlacaCarga = new JTextField(5);
 
 				// Adicionando os campos
 				add(new JLabel("Placa:"));
@@ -480,11 +491,12 @@ public class Teste {
 				add(campoPotencia);
 
 				// Botão
-				JButton botaoCadastrar = new JButton("Cadastrar");
+				JButton botaoCadastrarCarga = new JButton("Cadastrar Carga");
 				JButton limparCampos = new JButton("Limpar Campos");
 				JButton botaoFechar = new JButton("Fechar Janela");
+				JButton BotaoConsultarPlacaCarga = new JButton("Consulta Placa");
 
-				botaoCadastrar.addActionListener(new ActionListener() {
+				botaoCadastrarCarga.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 
 						// Cadastrando
@@ -536,12 +548,35 @@ public class Teste {
 
 					}
 				});
+				
+				// Metodo para consulta da placa ********************************************
+				
+				BotaoConsultarPlacaCarga.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String consPlaca = consultaPlacaCarga.getText();
+						
+						
+						
+						
+						
+						
+						
+						setVisible(true);
+					}
+				});
+				
+				
+				
+				
 
 				// sets da janela
-				setExtendedState(JFrame.MAXIMIZED_BOTH);
-				add(botaoCadastrar);
+				setSize(700, 300);
+				add(botaoCadastrarCarga);
 				add(limparCampos);
 				add(botaoFechar);
+				add(new JLabel(" Consulta Placa:"));
+				add(consultaPlacaCarga);
+				add(BotaoConsultarPlacaCarga);
 				setTitle("Cadastro Carga");
 				setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				setLayout(new FlowLayout());
@@ -611,7 +646,7 @@ public class Teste {
 		inicial.add(carga); // mudar aqui
 		inicial.add(confirmar);
 		inicial.add(sair);
-		
+
 		// Ajustando os posicionamentos
 		inicial.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 15));
 		inicial.setVisible(true);

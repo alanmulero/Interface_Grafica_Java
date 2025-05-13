@@ -19,7 +19,8 @@ public final class Carga extends Veiculo implements Calcular {
         this.cargaMax = 0;
         this.tara = 0;
     }
-
+    
+   
 
 
     public Carga(int cargaMax, int tara, String placa, String marca, String modelo, String cor, float velocMax, int qtdRodas, int qtdPistao, int potencia) {
@@ -29,6 +30,8 @@ public final class Carga extends Veiculo implements Calcular {
         this.calcVel(velocMax);
         System.out.println("Quantidade total de soma dos inteiros:  "+this.calcular());
     }
+    
+    public Carga() {}
 
     public Carga(String placa, String marca, String modelo, String cor, int carga, int tara, float velocidade, int rodas, int qtdPistao, int potencia) {
     }

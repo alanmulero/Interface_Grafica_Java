@@ -17,6 +17,10 @@ public final class Passeio extends Veiculo implements Calcular,Comparable<Passei
     public Passeio(int qtdPassageiros) {
         this.qtdPassageiros = 0;
     }
+    
+    public Passeio() {}
+		
+	
 
     public Passeio(int qtdPassageiros, String placa, String marca, String modelo, String cor, float velocMax, int qtdRodas, int qtdPistao, int potencia) {
         super(placa, marca, modelo, cor, velocMax, qtdRodas, qtdPistao, potencia);
