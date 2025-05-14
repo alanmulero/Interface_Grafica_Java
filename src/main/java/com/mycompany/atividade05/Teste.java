@@ -437,11 +437,11 @@ public class Teste {
 						for (int i = 0; i < bdPasseio.getArrayPasseio().size(); i++)
 							passeio = (Passeio) bdPasseio.getArrayPasseio().get(i);
 						if (passeio.getPlaca().equalsIgnoreCase(consPlaca)) {
-							JOptionPane.showMessageDialog(null, "Placa encontrada");
+							JOptionPane.showMessageDialog(null, "Placa encontrada","Placa", 1);
 							JOptionPane.showMessageDialog(null, passeio.toString());
 
 						} else {
-							JOptionPane.showMessageDialog(null, "Placa não encontrada");
+							JOptionPane.showMessageDialog(null, "Placa não encontrada","Placa",0);
 						}
 						setVisible(true);
 					}
@@ -532,7 +532,7 @@ public class Teste {
 							int potencia = Integer.parseInt(campoPotencia.getText());
 							int carga = Integer.parseInt(campoCargaMaxima.getText());
 							int tara = Integer.parseInt(campoTara.getText());
-							bdCarga.getArrayCarga().add(new Carga(placa, marca, modelo, cor, carga, tara, velocidade,
+							bdCarga.getArrayCarga().add(new Carga(carga, tara, placa, marca, modelo, cor, velocidade,
 									rodas, pistao, potencia));
 							JOptionPane.showMessageDialog(null, "Veiculo cadastrado com sucesso!");
 
@@ -548,26 +548,30 @@ public class Teste {
 
 					}
 				});
-				
-				// Metodo para consulta da placa ********************************************
-				
+
+				// Metodo para consulta da placa   Carga********************************************
+
 				BotaoConsultarPlacaCarga.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						String consPlaca = consultaPlacaCarga.getText();
 						
+						String consPlacaCarga = consultaPlacaCarga.getText();
+						Carga carga = new Carga();
 						
+						for (int i = 0; i < bdCarga.getArrayCarga().size(); i++)
+							carga = (Carga) bdCarga.getArrayCarga().get(i);
 						
-						
-						
-						
-						
+						if (carga.getPlaca().equalsIgnoreCase(consPlacaCarga)) {
+							
+							JOptionPane.showMessageDialog(null, "Placa encontrada","Placa",1);
+							JOptionPane.showMessageDialog(null, carga.toString());
+							
+						} else {
+							JOptionPane.showMessageDialog(null, "Placa não encontrada","carga",0);
+						}
+
 						setVisible(true);
 					}
 				});
-				
-				
-				
-				
 
 				// sets da janela
 				setSize(700, 300);
