@@ -251,6 +251,7 @@ public class Teste {
 	}
 
 	// Instanciando:
+	// *****************************************************************************************************************************
 	public static void main(String[] args) throws VeiculoExistException, VelocException {
 
 //        Teste teste = new Teste();
@@ -259,7 +260,7 @@ public class Teste {
 		// Instanciando janelas
 
 		inicial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		inicial.setSize(330, 180);
+		inicial.setSize(300, 350);
 		inicial.setLayout(null);
 		inicial.add(optRotulo);
 
@@ -268,7 +269,6 @@ public class Teste {
 		// Criando botões de rádio
 		JRadioButton passeio = new JRadioButton("Veiculo Passeio");
 		JRadioButton carga = new JRadioButton("Veiculo Carga");
-		// JRadioButton sair = new JRadioButton("Sair");
 		JButton sair = new JButton("Sair");
 		// Posicionando
 		passeio.setBounds(30, 20, 200, 20);
@@ -281,23 +281,25 @@ public class Teste {
 		grupo.add(carga);
 		grupo.add(sair);
 
-		// Janela 1 ************************************ Veiculo Passeio
+		// Janela 1
+		// *********************************************************************************
+		// Veiculo Passeio
 		class JanelaPasseio extends JFrame {
 
 			public JanelaPasseio() {
 
 				// Campos de texto
-				JTextField campoPlaca = new JTextField(5);
-				JTextField consultaPlaca = new JTextField(5);
-				JTextField campoMarca = new JTextField(5);
-				JTextField campoModelo = new JTextField(5);
-				JTextField campoCor = new JTextField(5);
-				JTextField campoQtdPassageiros = new JTextField(5);
-				JTextField campoVelocidade = new JTextField(3);
-				JTextField campoRodas = new JTextField(5);
-				JTextField campoPistao = new JTextField(5);
-				JTextField campoPotencia = new JTextField(5);
-
+				JTextField campoPlaca = new JTextField(8);
+				JTextField consultaPlaca = new JTextField(8);
+				JTextField campoMarca = new JTextField(8);
+				JTextField campoModelo = new JTextField(8);
+				JTextField campoCor = new JTextField(8);
+				JTextField campoQtdPassageiros = new JTextField(8);
+				JTextField campoVelocidade = new JTextField(8);
+				JTextField campoRodas = new JTextField(8);
+				JTextField campoPistao = new JTextField(8);
+				JTextField campoPotencia = new JTextField(8);
+				JTextField excluirPlaca = new JTextField(8);
 				// Adicionando os campos
 				add(new JLabel("Placa:"));
 				add(campoPlaca);
@@ -318,12 +320,12 @@ public class Teste {
 				add(new JLabel("Potência:"));
 				add(campoPotencia);
 
-				// Botão
-
+				add(excluirPlaca);
 				JButton botaoCadastrar = new JButton("Cadastrar");
 				JButton limparCampos = new JButton("Limpar Campos");
 				JButton botaoFechar = new JButton("Fechar Janela");
 				JButton BotaoConsultarPlaca = new JButton("Consulta Placa");
+				JButton excluirPorPlaca = new JButton("Excluir Placa");
 
 				botaoCadastrar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -378,15 +380,18 @@ public class Teste {
 				});
 
 				// sets da janela
-				// setExtendedState(JFrame.MAXIMIZED_BOTH);
-				setSize(700, 300);
-
+				setExtendedState(JFrame.MAXIMIZED_BOTH);
+				//setSize(900, 400);
 				add(botaoCadastrar);
 				add(limparCampos);
 				add(botaoFechar);
 				add(new JLabel(" Consulta Placa:"));
 				add(consultaPlaca);
 				add(BotaoConsultarPlaca);
+				add(new JLabel("Excluir por placa:"));
+				add(excluirPlaca);
+				add(excluirPorPlaca);
+
 				setTitle("Cadastro Passeio");
 				setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				setLayout(new FlowLayout());
@@ -415,6 +420,7 @@ public class Teste {
 						campoPistao.setText("");
 						campoPotencia.setText("");
 						consultaPlaca.setText("");
+						excluirPlaca.setText("");
 
 					}
 				});
@@ -437,12 +443,34 @@ public class Teste {
 						for (int i = 0; i < bdPasseio.getArrayPasseio().size(); i++)
 							passeio = (Passeio) bdPasseio.getArrayPasseio().get(i);
 						if (passeio.getPlaca().equalsIgnoreCase(consPlaca)) {
-							JOptionPane.showMessageDialog(null, "Placa encontrada","Placa", 1);
+							JOptionPane.showMessageDialog(null, "Placa encontrada", "Placa", 1);
 							JOptionPane.showMessageDialog(null, passeio.toString());
 
 						} else {
-							JOptionPane.showMessageDialog(null, "Placa não encontrada","Placa",0);
+							JOptionPane.showMessageDialog(null, "Placa não encontrada", "Placa", 0);
 						}
+						setVisible(true);
+					}
+				});
+
+				// Excluir por placa
+
+				excluirPorPlaca.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String consPlaca = excluirPlaca.getText();
+						Passeio passeio = new Passeio();
+						for (int i = 0; i < bdPasseio.getArrayPasseio().size(); i++)
+							passeio = (Passeio) bdPasseio.getArrayPasseio().get(i);
+						if (passeio.getPlaca().equalsIgnoreCase(consPlaca)) {
+							JOptionPane.showMessageDialog(null, "Veiculo correspondente que vai ser excluido.", "Placa",
+									1);
+							JOptionPane.showMessageDialog(null, passeio.toString());
+							bdPasseio.getArrayPasseio().remove(passeio);
+							JOptionPane.showMessageDialog(null, "Veiculo excluido com sucesso!", "Placa", 1);
+						} else {
+							JOptionPane.showMessageDialog(null, "Placa não encontrada", "Placa", 0);
+						}
+
 						setVisible(true);
 					}
 				});
@@ -452,21 +480,23 @@ public class Teste {
 			}
 		}
 
-		// Janela 2 Carga ##################################################
+		// Janela 2 Carga
+		// ###################################################################################################################3
 		class JanelaCarga extends JFrame {
 			public JanelaCarga() {
 
-				JTextField campoPlaca = new JTextField(5);
-				JTextField campoMarca = new JTextField(5);
-				JTextField campoModelo = new JTextField(5);
-				JTextField campoCor = new JTextField(5);
-				JTextField campoCargaMaxima = new JTextField(5);
-				JTextField campoTara = new JTextField(5);
-				JTextField campoVelocidade = new JTextField(5);
-				JTextField campoRodas = new JTextField(5);
-				JTextField campoPistao = new JTextField(5);
-				JTextField campoPotencia = new JTextField(5);
-				JTextField consultaPlacaCarga = new JTextField(5);
+				JTextField campoPlaca = new JTextField(8);
+				JTextField campoMarca = new JTextField(8);
+				JTextField campoModelo = new JTextField(8);
+				JTextField campoCor = new JTextField(8);
+				JTextField campoCargaMaxima = new JTextField(8);
+				JTextField campoTara = new JTextField(8);
+				JTextField campoVelocidade = new JTextField(8);
+				JTextField campoRodas = new JTextField(8);
+				JTextField campoPistao = new JTextField(8);
+				JTextField campoPotencia = new JTextField(8);
+				JTextField consultaPlacaCarga = new JTextField(8);
+				JTextField excluirPlaca = new JTextField(8);
 
 				// Adicionando os campos
 				add(new JLabel("Placa:"));
@@ -489,12 +519,14 @@ public class Teste {
 				add(campoPistao);
 				add(new JLabel("Potência:"));
 				add(campoPotencia);
+				add(excluirPlaca);
 
 				// Botão
 				JButton botaoCadastrarCarga = new JButton("Cadastrar Carga");
 				JButton limparCampos = new JButton("Limpar Campos");
 				JButton botaoFechar = new JButton("Fechar Janela");
 				JButton BotaoConsultarPlacaCarga = new JButton("Consulta Placa");
+				JButton excluirPorPlaca = new JButton("Excluir Placa");
 
 				botaoCadastrarCarga.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -549,24 +581,54 @@ public class Teste {
 					}
 				});
 
-				// Metodo para consulta da placa   Carga********************************************
+				// Metodo para consulta da placa
+				// Carga********************************************
 
 				BotaoConsultarPlacaCarga.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
+
 						String consPlacaCarga = consultaPlacaCarga.getText();
 						Carga carga = new Carga();
-						
+
 						for (int i = 0; i < bdCarga.getArrayCarga().size(); i++)
 							carga = (Carga) bdCarga.getArrayCarga().get(i);
-						
+
 						if (carga.getPlaca().equalsIgnoreCase(consPlacaCarga)) {
-							
-							JOptionPane.showMessageDialog(null, "Placa encontrada","Placa",1);
+
+							JOptionPane.showMessageDialog(null, "Placa encontrada", "Placa", 1);
 							JOptionPane.showMessageDialog(null, carga.toString());
-							
+
 						} else {
-							JOptionPane.showMessageDialog(null, "Placa não encontrada","carga",0);
+							JOptionPane.showMessageDialog(null, "Placa não encontrada", "carga", 0);
+						}
+
+						setVisible(true);
+					}
+				});
+				
+				
+				// Excluir por placa
+				
+				
+				
+				
+				
+				excluirPorPlaca.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String consPlacaCarga = excluirPlaca.getText();
+						Carga carga = new Carga();
+
+						for (int i = 0; i < bdCarga.getArrayCarga().size(); i++)
+							carga = (Carga) bdCarga.getArrayCarga().get(i);
+
+						if (carga.getPlaca().equalsIgnoreCase(consPlacaCarga)) {
+							JOptionPane.showMessageDialog(null, "Veiculo correspondente que vai ser excluido.", "Placa",
+									1);
+							JOptionPane.showMessageDialog(null, carga.toString());
+							bdCarga.getArrayCarga().remove(carga);
+							JOptionPane.showMessageDialog(null, "Veiculo excluido com sucesso!", "Placa", 1);
+						} else {
+							JOptionPane.showMessageDialog(null, "Placa não encontrada", "carga", 0);
 						}
 
 						setVisible(true);
@@ -574,13 +636,17 @@ public class Teste {
 				});
 
 				// sets da janela
-				setSize(700, 300);
+				setExtendedState(JFrame.MAXIMIZED_BOTH);
+				//setSize(700, 300);
 				add(botaoCadastrarCarga);
 				add(limparCampos);
 				add(botaoFechar);
 				add(new JLabel(" Consulta Placa:"));
 				add(consultaPlacaCarga);
 				add(BotaoConsultarPlacaCarga);
+				add(new JLabel("Excluir por placa:"));
+				add(excluirPlaca);
+				add(excluirPorPlaca);
 				setTitle("Cadastro Carga");
 				setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				setLayout(new FlowLayout());
@@ -652,6 +718,7 @@ public class Teste {
 		inicial.add(sair);
 
 		// Ajustando os posicionamentos
+		// inicial.setLayout(new GridLayout(4, 4));
 		inicial.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 15));
 		inicial.setVisible(true);
 
