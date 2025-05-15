@@ -21,8 +21,6 @@ public class Teste {
 
 	private static JFrame inicial = new JFrame("Janela Inicial");
 	private static JFrame passeio = new JFrame("Cadastro de Passeio");
-	private static JFrame listaPasseio = new JFrame("Lista de Passeio");
-	private static JFrame listaCarga = new JFrame("Lista de Carga");
 	private static JFrame carga = new JFrame("Cadastro de Carga");
 	private static JLabel optRotulo = new JLabel("Escolha um tipo de veiculo:  ");
 	private static JLabel rotuloEscolha = new JLabel("Escolha uma opção abaixo:  ");
@@ -276,7 +274,6 @@ public class Teste {
 		JRadioButton listaPasseio = new JRadioButton("Listar/Excluir Veiculo Passeio");
 		JRadioButton listaCarga = new JRadioButton("Listar/Excluir Veiculo Carga");
 
-
 		JButton sair = new JButton("Sair");
 		// Posicionando
 		passeio.setBounds(30, 20, 200, 20);
@@ -293,7 +290,7 @@ public class Teste {
 		grupo.add(listaPasseio);
 		grupo.add(listaCarga);
 
-		//                                  Janela 1  Passeio
+		// Janela 1 Passeio
 		// *********************************************************************************
 		// Veiculo Passeio
 		class JanelaPasseio extends JFrame {
@@ -343,7 +340,7 @@ public class Teste {
 					public void actionPerformed(ActionEvent e) {
 
 						// Cadastrando
-						
+
 						try {
 							String placa = campoPlaca.getText();
 
@@ -394,7 +391,6 @@ public class Teste {
 
 				// sets da janela **********************************8
 				setExtendedState(JFrame.MAXIMIZED_BOTH);
-				//setSize(900, 400);
 				add(botaoCadastrar);
 				add(limparCampos);
 				add(botaoFechar);
@@ -465,26 +461,8 @@ public class Teste {
 						setVisible(true);
 					}
 				});
-				
-				
-				
-				// Listar/Excluir todos os veiculos de passeio  ********************************************************888
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 
-				// Excluir por placa  Passeio
+				// Excluir por placa Passeio
 
 				excluirPorPlaca.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -510,6 +488,43 @@ public class Teste {
 
 			}
 		}
+
+		//  Janela para Listar/Excluir todos os veiculos de passeio
+		// ********************************************************
+
+		// Janela 1
+		class ListaP extends JFrame {
+			public ListaP() {
+				setTitle("Lista Veiculos de Passeio");
+				setExtendedState(JFrame.MAXIMIZED_BOTH);
+				setLayout(new FlowLayout());
+				setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				add(new JLabel("Você abriu a Janela 1"));
+				setVisible(true);
+			}
+		}
+		//  Janela para Listar/Excluir todos os veiculos de Carga
+		// ********************************************************
+	    // Janela 2
+	    class ListaC extends JFrame {
+	        public ListaC() {
+	            setTitle("Lista Veiculos de Carga");
+	        	setExtendedState(JFrame.MAXIMIZED_BOTH);
+				setLayout(new FlowLayout());
+				setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	            
+	            add(new JLabel("Você abriu a Janela 2"));
+	            setVisible(true);
+	        }
+	    }
+		
+		
+		
+		
+		
+		
+		
+		
 
 		// Janela 2 Carga
 		// ###################################################################################################################3
@@ -636,14 +651,9 @@ public class Teste {
 						setVisible(true);
 					}
 				});
-				
-				
+
 				// Excluir por placa
-				
-				
-				
-				
-				
+
 				excluirPorPlaca.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						String consPlacaCarga = excluirPlaca.getText();
@@ -668,7 +678,7 @@ public class Teste {
 
 				// sets da janela
 				setExtendedState(JFrame.MAXIMIZED_BOTH);
-				//setSize(700, 300);
+				// setSize(700, 300);
 				add(botaoCadastrarCarga);
 				add(limparCampos);
 				add(botaoFechar);
@@ -729,8 +739,8 @@ public class Teste {
 
 			}
 		});
-		
-		//*************************************************************************************************
+
+		// *************************************************************************************************
 
 		// Botão de confirmação
 		JButton confirmar = new JButton("Abrir");
@@ -741,18 +751,18 @@ public class Teste {
 				new JanelaPasseio();
 			} else if (carga.isSelected()) {
 				new JanelaCarga();
-			}else if (listaPasseio.isSelected()) {
-				bdPasseio.listarPasseio();
+			} else if (listaPasseio.isSelected()) {
+				new ListaP();
 			} else if (listaCarga.isSelected()) {
-				bdCarga.listarCarga();
+				 new ListaC();
 			} else {
 				JOptionPane.showMessageDialog(null, "Selecione uma opção válida.");
 			}
 		});
 
-		// Adicionando componentes e rotulos
+		// Adicionando componentes e rotulos na janela inicial
 		inicial.add(passeio);
-		inicial.add(carga); 
+		inicial.add(carga);
 		inicial.add(rotuloEscolha);
 		inicial.add(listaPasseio);
 		inicial.add(listaCarga);
@@ -760,7 +770,6 @@ public class Teste {
 		inicial.add(sair);
 
 		// Ajustando os posicionamentos
-		// inicial.setLayout(new GridLayout(4, 4));
 		inicial.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 15));
 		inicial.setVisible(true);
 
