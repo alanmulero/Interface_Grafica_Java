@@ -21,9 +21,13 @@ public class Teste {
 
 	private static JFrame inicial = new JFrame("Janela Inicial");
 	private static JFrame passeio = new JFrame("Cadastro de Passeio");
+	private static JFrame listaPasseio = new JFrame("Lista de Passeio");
+	private static JFrame listaCarga = new JFrame("Lista de Carga");
 	private static JFrame carga = new JFrame("Cadastro de Carga");
 	private static JLabel optRotulo = new JLabel("Escolha um tipo de veiculo:  ");
 	private static JLabel rotuloEscolha = new JLabel("Escolha uma opção abaixo:  ");
+	private static JLabel rotuloLista = new JLabel("Escolha uma opção para apresentar a Lista completa:  ");
+
 	private static BDVeiculos bdPasseio = new BDVeiculos();
 	private static BDVeiculos bdCarga = new BDVeiculos();
 
@@ -251,7 +255,7 @@ public class Teste {
 	}
 
 	// Instanciando:
-	// *****************************************************************************************************************************
+	// ***************************************************************************************************************************************************
 	public static void main(String[] args) throws VeiculoExistException, VelocException {
 
 //        Teste teste = new Teste();
@@ -269,10 +273,16 @@ public class Teste {
 		// Criando botões de rádio
 		JRadioButton passeio = new JRadioButton("Veiculo Passeio");
 		JRadioButton carga = new JRadioButton("Veiculo Carga");
+		JRadioButton listaPasseio = new JRadioButton("Listar/Excluir Veiculo Passeio");
+		JRadioButton listaCarga = new JRadioButton("Listar/Excluir Veiculo Carga");
+
+
 		JButton sair = new JButton("Sair");
 		// Posicionando
 		passeio.setBounds(30, 20, 200, 20);
 		carga.setBounds(30, 50, 200, 20);
+		listaPasseio.setBounds(30, 50, 200, 20);
+		listaCarga.setBounds(30, 50, 200, 20);
 		sair.setBounds(30, 70, 200, 20);
 
 		// Agrupando os botões
@@ -280,8 +290,10 @@ public class Teste {
 		grupo.add(passeio);
 		grupo.add(carga);
 		grupo.add(sair);
+		grupo.add(listaPasseio);
+		grupo.add(listaCarga);
 
-		// Janela 1
+		//                                  Janela 1  Passeio
 		// *********************************************************************************
 		// Veiculo Passeio
 		class JanelaPasseio extends JFrame {
@@ -331,6 +343,7 @@ public class Teste {
 					public void actionPerformed(ActionEvent e) {
 
 						// Cadastrando
+						
 						try {
 							String placa = campoPlaca.getText();
 
@@ -379,7 +392,7 @@ public class Teste {
 					}
 				});
 
-				// sets da janela
+				// sets da janela **********************************8
 				setExtendedState(JFrame.MAXIMIZED_BOTH);
 				//setSize(900, 400);
 				add(botaoCadastrar);
@@ -452,8 +465,26 @@ public class Teste {
 						setVisible(true);
 					}
 				});
+				
+				
+				
+				// Listar/Excluir todos os veiculos de passeio  ********************************************************888
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 
-				// Excluir por placa
+				// Excluir por placa  Passeio
 
 				excluirPorPlaca.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -698,6 +729,8 @@ public class Teste {
 
 			}
 		});
+		
+		//*************************************************************************************************
 
 		// Botão de confirmação
 		JButton confirmar = new JButton("Abrir");
@@ -708,12 +741,21 @@ public class Teste {
 				new JanelaPasseio();
 			} else if (carga.isSelected()) {
 				new JanelaCarga();
+			}else if (listaPasseio.isSelected()) {
+				bdPasseio.listarPasseio();
+			} else if (listaCarga.isSelected()) {
+				bdCarga.listarCarga();
+			} else {
+				JOptionPane.showMessageDialog(null, "Selecione uma opção válida.");
 			}
 		});
 
-		// Adicionando componentes
+		// Adicionando componentes e rotulos
 		inicial.add(passeio);
-		inicial.add(carga); // mudar aqui
+		inicial.add(carga); 
+		inicial.add(rotuloEscolha);
+		inicial.add(listaPasseio);
+		inicial.add(listaCarga);
 		inicial.add(confirmar);
 		inicial.add(sair);
 
