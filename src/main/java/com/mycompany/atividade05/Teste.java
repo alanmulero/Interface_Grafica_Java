@@ -8,6 +8,9 @@ import java.util.InputMismatchException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -22,9 +25,9 @@ public class Teste {
 	private static JFrame inicial = new JFrame("Janela Inicial");
 	private static JFrame passeio = new JFrame("Cadastro de Passeio");
 	private static JFrame carga = new JFrame("Cadastro de Carga");
-	private static JLabel optRotulo = new JLabel("Escolha um tipo de veiculo:  ");
-	private static JLabel rotuloEscolha = new JLabel("Escolha uma opção abaixo:  ");
-	private static JLabel rotuloLista = new JLabel("Escolha uma opção para apresentar a Lista completa:  ");
+	private static JLabel optRotulo = new JLabel("Escolha um tipo de veiculo para Cadastrar:  ");
+	private static JLabel rotuloEscolha = new JLabel("Escolha uma opção abaixo para apresentar a Lista completa após o cadastro:  ");
+	
 
 	private static BDVeiculos bdPasseio = new BDVeiculos();
 	private static BDVeiculos bdCarga = new BDVeiculos();
@@ -262,7 +265,7 @@ public class Teste {
 		// Instanciando janelas
 
 		inicial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		inicial.setSize(300, 350);
+		inicial.setSize(500, 350);
 		inicial.setLayout(null);
 		inicial.add(optRotulo);
 
@@ -489,42 +492,119 @@ public class Teste {
 			}
 		}
 
-		//  Janela para Listar/Excluir todos os veiculos de passeio
+		// Janela para Listar/Excluir todos os veiculos de passeio janela 1
 		// ********************************************************
 
-		// Janela 1
-		class ListaP extends JFrame {
-			public ListaP() {
-				setTitle("Lista Veiculos de Passeio");
+		class JanelaP implements ActionListener {
+		
+			
+			 	private JFrame janela = new JFrame("Veículos de Passeio");
+			    private JTable tabela;
+			    private DefaultTableModel modelo;
+			    private JScrollPane scroll;
+			    private JButton btImprimirTodos, btExcluirTodos, btSair;
+
+			    private List<Passeio> listaPasseio;
+
+			    private String[] colunas = {
+			        "Placa", "Marca", "Modelo", "Cor", 
+			        "Velocidade", "Rodas", "Pistões", "Potência", "Passageiros"
+			    };
+
+			    public void JanelaPasseio(List<Passeio> listaPasseio) {
+			        this.listaPasseio = listaPasseio;
+			        configurarJanela();
+			    }
+
+			    private void configurarJanela() {
+			        janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			        janela.setLayout(new BorderLayout());
+			        janela.setSize(900, 400);
+			        janela.setLocationRelativeTo(null);
+
+			        modelo = new DefaultTableModel(colunas, 0);
+			        tabela = new JTable(modelo);
+			        scroll = new JScrollPane(tabela);
+
+			        JPanel botoes = new JPanel(new FlowLayout());
+
+			        btImprimirTodos = new JButton("Imprimir Todos");
+			        btExcluirTodos = new JButton("Excluir Todos");
+			        btSair = new JButton("Sair");
+
+			        btImprimirTodos.addActionListener(this);
+			        btExcluirTodos.addActionListener(this);
+			        btSair.addActionListener(this);
+
+			        botoes.add(btImprimirTodos);
+			        botoes.add(btExcluirTodos);
+			        botoes.add(btSair);
+
+			        janela.add(scroll, BorderLayout.CENTER);
+			        janela.add(botoes, BorderLayout.SOUTH);
+			        janela.setVisible(true);
+			    }
+
+			    private void imprimirDados() {
+			        modelo.setRowCount(0); // limpa a tabela
+			        for (Passeio p : listaPasseio) {
+			            Object[] linha = {
+			                p.getPlaca(),
+			                p.getMarca(),
+			                p.getModelo(),
+			                p.getCor(),
+			                p.getVelocMax(),
+			                p.getQtdRodas(),
+			                p.getMotor().getPistao(),
+			                p.getMotor().getPotencia(),
+			                p.getQtdPassageiros()
+			            };
+			            modelo.addRow(linha);
+			        }
+			    }
+
+			    private void excluirTodos() {
+			        if (listaPasseio.isEmpty()) {
+			            JOptionPane.showMessageDialog(null, "Nenhum veículo para excluir.");
+			            return;
+			        }
+
+			        listaPasseio.clear();
+			        modelo.setRowCount(0);
+			        JOptionPane.showMessageDialog(null, "Todos os veículos foram excluídos.");
+			    }
+
+			    @Override
+			    public void actionPerformed(ActionEvent e) {
+			        if (e.getSource() == btImprimirTodos) {
+			            imprimirDados();
+			        } else if (e.getSource() == btExcluirTodos) {
+			            excluirTodos();
+			        } else if (e.getSource() == btSair) {
+			            janela.dispose();
+			        }
+			        
+			        
+			    }
+			
+			  
+
+		}
+
+		// Janela para Listar/Excluir todos os veiculos de Carga
+		// ********************************************************
+		// Janela 2
+		class ListaC extends JFrame {
+			public ListaC() {
+				setTitle("Lista Veiculos de Carga");
 				setExtendedState(JFrame.MAXIMIZED_BOTH);
 				setLayout(new FlowLayout());
 				setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				add(new JLabel("Você abriu a Janela 1"));
+
+				add(new JLabel("Você abriu a Janela 2"));
 				setVisible(true);
 			}
 		}
-		//  Janela para Listar/Excluir todos os veiculos de Carga
-		// ********************************************************
-	    // Janela 2
-	    class ListaC extends JFrame {
-	        public ListaC() {
-	            setTitle("Lista Veiculos de Carga");
-	        	setExtendedState(JFrame.MAXIMIZED_BOTH);
-				setLayout(new FlowLayout());
-				setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	            
-	            add(new JLabel("Você abriu a Janela 2"));
-	            setVisible(true);
-	        }
-	    }
-		
-		
-		
-		
-		
-		
-		
-		
 
 		// Janela 2 Carga
 		// ###################################################################################################################3
@@ -743,7 +823,7 @@ public class Teste {
 		// *************************************************************************************************
 
 		// Botão de confirmação
-		JButton confirmar = new JButton("Abrir");
+		JButton confirmar = new JButton("Cadastrar/Listar");
 		confirmar.setBounds(100, 80, 80, 25);
 
 		confirmar.addActionListener(e -> {
@@ -752,9 +832,9 @@ public class Teste {
 			} else if (carga.isSelected()) {
 				new JanelaCarga();
 			} else if (listaPasseio.isSelected()) {
-				new ListaP();
+				new JanelaP().JanelaPasseio(bdPasseio.getArrayPasseio());
 			} else if (listaCarga.isSelected()) {
-				 new ListaC();
+				//new ListaC();
 			} else {
 				JOptionPane.showMessageDialog(null, "Selecione uma opção válida.");
 			}
