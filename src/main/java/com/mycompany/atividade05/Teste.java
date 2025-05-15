@@ -26,8 +26,8 @@ public class Teste {
 	private static JFrame passeio = new JFrame("Cadastro de Passeio");
 	private static JFrame carga = new JFrame("Cadastro de Carga");
 	private static JLabel optRotulo = new JLabel("Escolha um tipo de veiculo para Cadastrar:  ");
-	private static JLabel rotuloEscolha = new JLabel("Escolha uma opção abaixo para apresentar a Lista completa após o cadastro:  ");
-	
+	private static JLabel rotuloEscolha = new JLabel(
+			"Escolha uma opção abaixo para apresentar a Lista completa após o cadastro:  ");
 
 	private static BDVeiculos bdPasseio = new BDVeiculos();
 	private static BDVeiculos bdCarga = new BDVeiculos();
@@ -496,113 +496,168 @@ public class Teste {
 		// ********************************************************
 
 		class JanelaP implements ActionListener {
-		
-			
-			 	private JFrame janela = new JFrame("Veículos de Passeio");
-			    private JTable tabela;
-			    private DefaultTableModel modelo;
-			    private JScrollPane scroll;
-			    private JButton btImprimirTodos, btExcluirTodos, btSair;
 
-			    private List<Passeio> listaPasseio;
+			private JFrame janela = new JFrame("Veículos de Passeio");
+			private JTable tabela;
+			private DefaultTableModel modelo;
+			private JScrollPane scroll;
+			private JButton btImprimirTodos, btExcluirTodos, btSair;
 
-			    private String[] colunas = {
-			        "Placa", "Marca", "Modelo", "Cor", 
-			        "Velocidade", "Rodas", "Pistões", "Potência", "Passageiros"
-			    };
+			private List<Passeio> listaPasseio;
 
-			    public void JanelaPasseio(List<Passeio> listaPasseio) {
-			        this.listaPasseio = listaPasseio;
-			        configurarJanela();
-			    }
+			private String[] colunas = { "Placa", "Marca", "Modelo", "Cor", "Velocidade", "Rodas", "Pistões",
+					"Potência", "Passageiros" };
 
-			    private void configurarJanela() {
-			        janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			        janela.setLayout(new BorderLayout());
-			        janela.setSize(900, 400);
-			        janela.setLocationRelativeTo(null);
+			public void JanelaPasseio(List<Passeio> listaPasseio) {
+				this.listaPasseio = listaPasseio;
+				configurarJanela();
+			}
 
-			        modelo = new DefaultTableModel(colunas, 0);
-			        tabela = new JTable(modelo);
-			        scroll = new JScrollPane(tabela);
+			private void configurarJanela() {
+				janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				janela.setLayout(new BorderLayout());
+				janela.setSize(900, 400);
+				janela.setLocationRelativeTo(null);
 
-			        JPanel botoes = new JPanel(new FlowLayout());
+				modelo = new DefaultTableModel(colunas, 0);
+				tabela = new JTable(modelo);
+				scroll = new JScrollPane(tabela);
 
-			        btImprimirTodos = new JButton("Imprimir Todos");
-			        btExcluirTodos = new JButton("Excluir Todos");
-			        btSair = new JButton("Sair");
+				JPanel botoes = new JPanel(new FlowLayout());
 
-			        btImprimirTodos.addActionListener(this);
-			        btExcluirTodos.addActionListener(this);
-			        btSair.addActionListener(this);
+				btImprimirTodos = new JButton("Imprimir Todos");
+				btExcluirTodos = new JButton("Excluir Todos");
+				btSair = new JButton("Sair");
 
-			        botoes.add(btImprimirTodos);
-			        botoes.add(btExcluirTodos);
-			        botoes.add(btSair);
+				btImprimirTodos.addActionListener(this);
+				btExcluirTodos.addActionListener(this);
+				btSair.addActionListener(this);
 
-			        janela.add(scroll, BorderLayout.CENTER);
-			        janela.add(botoes, BorderLayout.SOUTH);
-			        janela.setVisible(true);
-			    }
+				botoes.add(btImprimirTodos);
+				botoes.add(btExcluirTodos);
+				botoes.add(btSair);
 
-			    private void imprimirDados() {
-			        modelo.setRowCount(0); // limpa a tabela
-			        for (Passeio p : listaPasseio) {
-			            Object[] linha = {
-			                p.getPlaca(),
-			                p.getMarca(),
-			                p.getModelo(),
-			                p.getCor(),
-			                p.getVelocMax(),
-			                p.getQtdRodas(),
-			                p.getMotor().getPistao(),
-			                p.getMotor().getPotencia(),
-			                p.getQtdPassageiros()
-			            };
-			            modelo.addRow(linha);
-			        }
-			    }
+				janela.add(scroll, BorderLayout.CENTER);
+				janela.add(botoes, BorderLayout.SOUTH);
+				janela.setVisible(true);
+			}
 
-			    private void excluirTodos() {
-			        if (listaPasseio.isEmpty()) {
-			            JOptionPane.showMessageDialog(null, "Nenhum veículo para excluir.");
-			            return;
-			        }
+			private void imprimirDados() {
+				modelo.setRowCount(0); 
+				for (Passeio p : listaPasseio) {
+					Object[] linha = { p.getPlaca(), p.getMarca(), p.getModelo(), p.getCor(), p.getVelocMax(),
+							p.getQtdRodas(), p.getMotor().getPistao(), p.getMotor().getPotencia(),
+							p.getQtdPassageiros() };
+					modelo.addRow(linha);
+				}
+			}
 
-			        listaPasseio.clear();
-			        modelo.setRowCount(0);
-			        JOptionPane.showMessageDialog(null, "Todos os veículos foram excluídos.");
-			    }
+			private void excluirTodos() {
+				if (listaPasseio.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Nenhum veículo para excluir.");
+					return;
+				}
 
-			    @Override
-			    public void actionPerformed(ActionEvent e) {
-			        if (e.getSource() == btImprimirTodos) {
-			            imprimirDados();
-			        } else if (e.getSource() == btExcluirTodos) {
-			            excluirTodos();
-			        } else if (e.getSource() == btSair) {
-			            janela.dispose();
-			        }
-			        
-			        
-			    }
-			
-			  
+				listaPasseio.clear();
+				modelo.setRowCount(0);
+				JOptionPane.showMessageDialog(null, "Todos os veículos foram excluídos.");
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == btImprimirTodos) {
+					imprimirDados();
+				} else if (e.getSource() == btExcluirTodos) {
+					excluirTodos();
+				} else if (e.getSource() == btSair) {
+					janela.dispose();
+				}
+
+			}
 
 		}
 
 		// Janela para Listar/Excluir todos os veiculos de Carga
 		// ********************************************************
 		// Janela 2
-		class ListaC extends JFrame {
-			public ListaC() {
-				setTitle("Lista Veiculos de Carga");
-				setExtendedState(JFrame.MAXIMIZED_BOTH);
-				setLayout(new FlowLayout());
-				setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		class JanelaC implements ActionListener {
 
-				add(new JLabel("Você abriu a Janela 2"));
-				setVisible(true);
+			private JFrame janela = new JFrame("Veículos de Carga");
+			private JTable tabela;
+			private DefaultTableModel modelo;
+			private JScrollPane scroll;
+			private JButton btImprimirTodos, btExcluirTodos, btSair;
+
+			//private List<Carga> listaCarga;
+
+			private String[] colunas = { "Placa", "Marca", "Modelo", "Cor", "Velocidade", "Rodas", "Pistões",
+					"Potência", "CargaMaxima","Tara" };
+			private List<Carga> listaCarga;
+
+			public void JanelaCarga(List<Carga> listaCarga) {
+				this.listaCarga = listaCarga;
+				configurarJanela();
+			}
+
+			private void configurarJanela() {
+				janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				janela.setLayout(new BorderLayout());
+				janela.setSize(1000, 500);
+				janela.setLocationRelativeTo(null);
+
+				modelo = new DefaultTableModel(colunas, 0);
+				tabela = new JTable(modelo);
+				scroll = new JScrollPane(tabela);
+
+				JPanel botoes = new JPanel(new FlowLayout());
+
+				btImprimirTodos = new JButton("Imprimir Todos");
+				btExcluirTodos = new JButton("Excluir Todos");
+				btSair = new JButton("Sair");
+
+				btImprimirTodos.addActionListener(this);
+				btExcluirTodos.addActionListener(this);
+				btSair.addActionListener(this);
+
+				botoes.add(btImprimirTodos);
+				botoes.add(btExcluirTodos);
+				botoes.add(btSair);
+
+				janela.add(scroll, BorderLayout.CENTER);
+				janela.add(botoes, BorderLayout.SOUTH);
+				janela.setVisible(true);
+			}
+
+			private void imprimirDados() {
+				modelo.setRowCount(0); // limpa a tabela
+				for (Carga c : listaCarga) {
+					Object[] linha = { c.getPlaca(), c.getMarca(), c.getModelo(), c.getCor(), c.getVelocMax(),
+							c.getQtdRodas(), c.getMotor().getPistao(), c.getMotor().getPotencia(),
+							c.getTara(), c.getCargaMax()};
+					modelo.addRow(linha);
+				}
+			}
+
+			private void excluirTodos() {
+				if (listaCarga.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Nenhum veículo para excluir.");
+					return;
+				}
+
+				listaCarga.clear();
+				modelo.setRowCount(0);
+				JOptionPane.showMessageDialog(null, "Todos os veículos foram excluídos.");
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == btImprimirTodos) {
+					imprimirDados();
+				} else if (e.getSource() == btExcluirTodos) {
+					excluirTodos();
+				} else if (e.getSource() == btSair) {
+					janela.dispose();
+				}
 			}
 		}
 
@@ -834,7 +889,7 @@ public class Teste {
 			} else if (listaPasseio.isSelected()) {
 				new JanelaP().JanelaPasseio(bdPasseio.getArrayPasseio());
 			} else if (listaCarga.isSelected()) {
-				//new ListaC();
+				 new JanelaC().JanelaCarga(bdCarga.getArrayCarga());
 			} else {
 				JOptionPane.showMessageDialog(null, "Selecione uma opção válida.");
 			}
